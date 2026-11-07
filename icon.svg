@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Travel Journal">
+  <defs>
+    <linearGradient id="tj-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4a8a6b"/>
+      <stop offset="1" stop-color="#2f5f4c"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#tj-bg)"/>
+  <rect x="6.5" y="6.5" width="51" height="51" rx="10.5" fill="none" stroke="#ffffff" stroke-opacity="0.28" stroke-width="1.5"/>
+  <circle cx="43.5" cy="21" r="6" fill="#f2c14e"/>
+  <path d="M8.5 49.5 L24.5 28 L36.5 42.5 L44 34 L55.5 49.5 Z" fill="#f7f8f5"/>
+  <path d="M8.5 49.5 H55.5" stroke="#f7f8f5" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+</svg>

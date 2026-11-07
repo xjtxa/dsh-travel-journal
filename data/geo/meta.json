@@ -1,0 +1,44 @@
+{
+  "version": 2,
+  "builtAt": "2026-10-31",
+  "crs": "WGS84 (CRS84)",
+  "levels": {
+    "province": 34,
+    "city": 360,
+    "county": 2864
+  },
+  "namedCounties": 2864,
+  "primary": "OCHA COD-AB province/city hierarchy",
+  "cities": {
+    "source": "OCHA Regional Office for Asia and the Pacific, China COD-AB",
+    "published": "2020-09-10",
+    "lastReviewed": "2024-10",
+    "boundaryYear": null,
+    "boundaryYearNote": "Publisher says the date boundaries were established is unknown; publication and review dates are not geometry dates.",
+    "url": "https://data.humdata.org/dataset/cod-ab-chn",
+    "license": "CC BY 3.0 IGO",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/igo/legalcode",
+    "coordinateDecimals": 6,
+    "geometrySimplified": false,
+    "names": "Chinese names and parent P-codes come from the same source feature; corrections in ocha-provenance.json."
+  },
+  "counties": {
+    "source": "geoBoundaries CHN ADM3 / OpenStreetMap",
+    "boundaryYear": 2017,
+    "sourceCommit": "9469f09",
+    "url": "https://www.geoboundaries.org/api/current/gbOpen/CHN/ADM3/",
+    "license": "ODbL 1.0",
+    "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "toleranceDegrees": 0.01,
+    "coordinateDecimals": 4,
+    "role": "Historical district reference; cannot replace primary city hierarchy or claim current precise district boundaries.",
+    "nameCorrections": "name-corrections.json"
+  },
+  "attribution": "OCHA ROAP / HDX (CC BY 3.0 IGO); geoBoundaries; © OpenStreetMap contributors (ODbL 1.0)",
+  "knownLimitations": [
+    "Approximate region from source data, not a survey-grade or current legal boundary.",
+    "2017 district boundaries include later split/merged units; repaired against exact source identities, never nearest centres.",
+    "Source geometries can disagree at boundaries/coasts; incompatible district parents never override a city match.",
+    "New cities or reclaimed land may be uncovered. A city-layer gap may use an actual historic county polygon hit only when explicit parent names/codes match the bundled city registry; records label this fallback as 2017 geoBoundaries. No nearest-centre or online fallback."
+  ]
+}

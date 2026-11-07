@@ -1,0 +1,303 @@
+{
+  "schemaVersion": 1,
+  "synthetic": true,
+  "notice": "全部拍摄日期、GPS、城市安排和随手说明均为合成测试数据，不代表用户或摄影作者真实到访。照片来自公开许可来源；没有修改任何用户原图。",
+  "timezone": "Asia/Shanghai",
+  "coordinateSystem": "WGS84",
+  "photos": [
+    {
+      "id": "01-guangzhou-river",
+      "file": "photos/01-guangzhou-river.jpg",
+      "note": "【合成演示】今天在广州，早上沿江散步，吹风看高楼，天气还不错。",
+      "synthetic": true,
+      "expected": {
+        "dayKey": "2026-08-01",
+        "capturedAt": "2026:08:01 09:30:00",
+        "capturedOffset": "+08:00",
+        "gps": {
+          "latitude": 23.11055,
+          "longitude": 113.32597
+        },
+        "city": "广州",
+        "cityEvidence": "synthetic GPS",
+        "category": "风景",
+        "width": 989,
+        "height": 682,
+        "mustNotInfer": [
+          "真实旅行经历",
+          "具体店名",
+          "未提供的交通和价格"
+        ]
+      },
+      "source": {
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Guangzhou_skyline.jpg",
+        "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/4/49/Guangzhou_skyline.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "author": "jo.sau",
+        "title": "Guangzhou skyline.jpg",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "retrievedAt": "2026-10-30",
+        "downloadedOriginal": true,
+        "modifications": "Replaced EXIF and removed conflicting XMP/IPTC with synthetic date/GPS; compressed pixels unchanged. Metadata derivatives retain each source license."
+      },
+      "verification": {
+        "bytes": 276990,
+        "sha256": "fc3f037b38054124b2c1d1b7d85878a122574052a039fbdc8959851bfe6cdce2",
+        "originalBytes": 276306,
+        "originalSha256": "e082ee33616e6d1f0bfb315a5f1d1dba52d7c2268de8ff7bea5d73198d0ecb3d",
+        "jpegNonMetadataIdentical": true,
+        "decodedRgbIdentical": true,
+        "decodedRgbSha256": "babbf3975dfc1af24c6b31afa0ecee85bbcb6c358f08e481e573c54d5cf86e0a",
+        "removedMetadataSegments": []
+      }
+    },
+    {
+      "id": "02-guangzhou-rice",
+      "file": "photos/02-guangzhou-rice.jpg",
+      "note": "【合成演示】广州中午随便吃了盘炒饭，米饭粒粒分明，吃得很饱。",
+      "synthetic": true,
+      "expected": {
+        "dayKey": "2026-08-01",
+        "capturedAt": "2026:08:01 12:20:00",
+        "capturedOffset": "+08:00",
+        "gps": {
+          "latitude": 23.12463,
+          "longitude": 113.32221
+        },
+        "city": "广州",
+        "cityEvidence": "synthetic GPS",
+        "category": "美食",
+        "width": 720,
+        "height": 977,
+        "mustNotInfer": [
+          "真实旅行经历",
+          "具体店名",
+          "未提供的交通和价格"
+        ]
+      },
+      "source": {
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:FRIED_RICE.jpg",
+        "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1f/FRIED_RICE.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "author": "ప్రశాంతి",
+        "title": "FRIED RICE.jpg",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "retrievedAt": "2026-10-30",
+        "downloadedOriginal": true,
+        "modifications": "Replaced EXIF and removed conflicting XMP/IPTC with synthetic date/GPS; compressed pixels unchanged. Metadata derivatives retain each source license."
+      },
+      "verification": {
+        "bytes": 179682,
+        "sha256": "0692554aa98379e69e0b29178f759b9bb42c37ae72a91742f8edf10afe608392",
+        "originalBytes": 179102,
+        "originalSha256": "fed1fed39a13c806bfca3a59788d26e5af024c0b9fa3ae1fc1228026631cdd3a",
+        "jpegNonMetadataIdentical": true,
+        "decodedRgbIdentical": true,
+        "decodedRgbSha256": "92312e388a956766e72b0afd239b887d25c6fcac292c1e5c9316edbd8c75829e",
+        "removedMetadataSegments": [
+          {
+            "marker": "0xe1",
+            "bytes": 110,
+            "kind": "EXIF"
+          }
+        ]
+      }
+    },
+    {
+      "id": "03-guangzhou-tea-no-gps",
+      "file": "photos/03-guangzhou-tea-no-gps.jpg",
+      "note": "【合成演示】下午还在广州，走累了喝奶茶。照片没有位置数据，具体是哪家店记不清了。",
+      "synthetic": true,
+      "expected": {
+        "dayKey": "2026-08-01",
+        "capturedAt": "2026:08:01 15:45:00",
+        "capturedOffset": "+08:00",
+        "gps": null,
+        "city": "广州",
+        "cityEvidence": "user note only; GPS must stay null",
+        "category": "饮品",
+        "width": 4104,
+        "height": 2736,
+        "mustNotInfer": [
+          "真实旅行经历",
+          "具体店名",
+          "未提供的交通和价格",
+          "精确地点和GPS"
+        ]
+      },
+      "source": {
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Hong_Kong-style_milk_tea.jpg",
+        "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Hong_Kong-style_milk_tea.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "author": "City Foodsters",
+        "title": "Hong Kong-style milk tea.jpg",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "retrievedAt": "2026-10-30",
+        "downloadedOriginal": true,
+        "modifications": "Replaced EXIF and removed conflicting XMP/IPTC with synthetic date/GPS; compressed pixels unchanged. Metadata derivatives retain each source license."
+      },
+      "verification": {
+        "bytes": 5224125,
+        "sha256": "df82b550078ea3b9a531bac102343320535cfedec75b43763d56b9e20d7e43f1",
+        "originalBytes": 5262149,
+        "originalSha256": "5107b15008ed7bbb5895a763744c9b89cd10307045ad821268c8d340842fa3bd",
+        "jpegNonMetadataIdentical": true,
+        "decodedRgbIdentical": true,
+        "decodedRgbSha256": "265836605e0e974d13fce0859272da8da7f099751237ac8be0856b8b5af09af1",
+        "removedMetadataSegments": [
+          {
+            "marker": "0xe1",
+            "bytes": 13861,
+            "kind": "EXIF"
+          },
+          {
+            "marker": "0xed",
+            "bytes": 13182,
+            "kind": "IPTC/APP13"
+          },
+          {
+            "marker": "0xe1",
+            "bytes": 11527,
+            "kind": "XMP/APP1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "04-shenzhen-skyline",
+      "file": "photos/04-shenzhen-skyline.jpg",
+      "note": "【合成演示】今天到深圳，傍晚看看城市和远处的水面，走了一整天。",
+      "synthetic": true,
+      "expected": {
+        "dayKey": "2026-08-02",
+        "capturedAt": "2026:08:02 18:10:00",
+        "capturedOffset": "+08:00",
+        "gps": {
+          "latitude": 22.4883,
+          "longitude": 113.912
+        },
+        "city": "深圳",
+        "cityEvidence": "synthetic GPS",
+        "category": "风景",
+        "width": 2000,
+        "height": 1335,
+        "mustNotInfer": [
+          "真实旅行经历",
+          "具体店名",
+          "未提供的交通和价格"
+        ]
+      },
+      "source": {
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Shenzhen_Skyline_from_Nanshan.jpg",
+        "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/3/35/Shenzhen_Skyline_from_Nanshan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "author": "Simbaxu",
+        "title": "Shenzhen Skyline from Nanshan.jpg",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "retrievedAt": "2026-10-30",
+        "downloadedOriginal": true,
+        "modifications": "Replaced EXIF and removed conflicting XMP/IPTC with synthetic date/GPS; compressed pixels unchanged. Metadata derivatives retain each source license."
+      },
+      "verification": {
+        "bytes": 2563663,
+        "sha256": "92f53a789a32b8afa8d278de08cff10a1e12c75458d8fb1a75d93da70a278a2f",
+        "originalBytes": 2567674,
+        "originalSha256": "6147327b2234827350eac0c1fb12124357d169cc03c418f0fc1b16225860b48e",
+        "jpegNonMetadataIdentical": true,
+        "decodedRgbIdentical": true,
+        "decodedRgbSha256": "133c2e6d7f2ef6808d92d60dc434d7a2ad6f4393a170468e6e3b030335b2043a",
+        "removedMetadataSegments": [
+          {
+            "marker": "0xe1",
+            "bytes": 884,
+            "kind": "EXIF"
+          },
+          {
+            "marker": "0xe1",
+            "bytes": 3693,
+            "kind": "XMP/APP1"
+          },
+          {
+            "marker": "0xed",
+            "bytes": 122,
+            "kind": "IPTC/APP13"
+          }
+        ]
+      }
+    },
+    {
+      "id": "05-hangzhou-lake",
+      "file": "photos/05-hangzhou-lake.jpg",
+      "note": "【合成演示】今天在杭州，上午沿西湖慢慢走，湖边安静，想多待一会。",
+      "synthetic": true,
+      "expected": {
+        "dayKey": "2026-08-03",
+        "capturedAt": "2026:08:03 10:05:00",
+        "capturedOffset": "+08:00",
+        "gps": {
+          "latitude": 30.245,
+          "longitude": 120.143
+        },
+        "city": "杭州",
+        "cityEvidence": "synthetic GPS",
+        "category": "风景",
+        "width": 1024,
+        "height": 682,
+        "mustNotInfer": [
+          "真实旅行经历",
+          "具体店名",
+          "未提供的交通和价格"
+        ]
+      },
+      "source": {
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:West_Lake_Hangzhou.jpg",
+        "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fe/West_Lake_Hangzhou.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "author": "jaaron",
+        "title": "West Lake Hangzhou.jpg",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "retrievedAt": "2026-10-30",
+        "downloadedOriginal": true,
+        "modifications": "Replaced EXIF and removed conflicting XMP/IPTC with synthetic date/GPS; compressed pixels unchanged. Metadata derivatives retain each source license."
+      },
+      "verification": {
+        "bytes": 411340,
+        "sha256": "ae68eee1d745bcdd27bc00453cc5cc8f15b596fbdf097e5860f0dba905721f7d",
+        "originalBytes": 410656,
+        "originalSha256": "a5af1f019aae8d874e392b2bb7bb9a2d733f92a97556ec30860e581633da2bc6",
+        "jpegNonMetadataIdentical": true,
+        "decodedRgbIdentical": true,
+        "decodedRgbSha256": "4902be14b86b4b1a6d368b22698c7072ebb1586c1f2d02aa92fb6e2cb6d4ba07",
+        "removedMetadataSegments": []
+      }
+    }
+  ],
+  "expectedDailyGroups": [
+    {
+      "date": "2026-08-01",
+      "city": "广州",
+      "photoCount": 3,
+      "categories": [
+        "风景",
+        "美食",
+        "饮品"
+      ]
+    },
+    {
+      "date": "2026-08-02",
+      "city": "深圳",
+      "photoCount": 1,
+      "categories": [
+        "风景"
+      ]
+    },
+    {
+      "date": "2026-08-03",
+      "city": "杭州",
+      "photoCount": 1,
+      "categories": [
+        "风景"
+      ]
+    }
+  ]
+}

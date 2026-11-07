@@ -1,0 +1,2719 @@
+{
+  "version": 2,
+  "sourceUrl": "https://media.githubusercontent.com/media/wmgeolab/geoBoundaries/9469f09/releaseData/gbOpen/CHN/ADM3/geoBoundaries-CHN-ADM3_simplified.geojson",
+  "sourceSha256": "ea64fe24f193e319ce48895f229a5b3f46d2a60f3f3df67e6172ab037e4cc8fd",
+  "boundaryYear": 2017,
+  "codeFacts": {
+    "url": "https://raw.githubusercontent.com/yescallop/areacodes/master/data/2024.txt",
+    "sha256": "4bfd0a05caa1abdf6add54301eebb256156a0044010244ecdb659062cdbc0313",
+    "asOf": "2024-12-31"
+  },
+  "reason": "The earlier representative-point name join lost 67 names and assigned some neighbouring names to the wrong polygon. Source names and exact feature identity are retained; names are never inferred from nearest centres.",
+  "references": [
+    "https://zfgb.hangzhou.gov.cn/18/106220253/t106220253064/528872.shtml",
+    "https://www.qhrd.gov.cn/zyfb/cwhhy/sssjrdcwhdlchy/hywj_260/201809/t20180919_18985.html",
+    "https://www.ycwc.gov.cn/wcqrmzf/c100253/zjwc.shtml",
+    "https://www.gansu.gov.cn/gsszf/c100075/201907/169354/files/c9bd6d8c9c8d4041ac8baeaf329963e2.pdf",
+    "https://dxalxl.gov.cn/dxalxl/c100484/zoujin.shtml",
+    "https://www.huzhong.gov.cn/"
+  ],
+  "missingLabelsRepaired": 67,
+  "wrongLabelsRepaired": 81,
+  "unresolvedGeometryChanges": {
+    "503": "源英文名 Taixing City 与江苏宜兴几何位置不一致；保留已有宜兴市标签，未按英文盲改。",
+    "532": "原萧山区范围后来部分划入钱塘区，2017几何不能当作当前县界。",
+    "999": "原余杭区后来分为余杭区、临平区，2017几何不能当作当前县界。",
+    "1715": "2019年原乌马河区分属乌翠区、伊美区；没有新界线证据，保留旧界名称，仅确认伊春市。",
+    "2605": "源英文名 Donghu District 位于海南海口；保留已有秀英区标签，未按英文盲改。"
+  },
+  "corrections": [
+    {
+      "index": 8,
+      "boundaryId": "62558664B62124796319853",
+      "sourceName": "Panshan County",
+      "before": {
+        "n": "兴隆台区",
+        "c": "盘锦市",
+        "p": "辽宁省",
+        "g": "211103"
+      },
+      "after": {
+        "n": "盘山县",
+        "c": "盘锦市",
+        "p": "辽宁省",
+        "g": "211122"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 12,
+      "boundaryId": "62558664B7945978229626",
+      "sourceName": "Jining District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "集宁区",
+        "c": "乌兰察布市",
+        "p": "内蒙古自治区",
+        "g": "150902"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 19,
+      "boundaryId": "62558664B34252500951352",
+      "sourceName": "Rongcheng District",
+      "before": {
+        "n": "揭东区",
+        "c": "揭阳市",
+        "p": "广东省",
+        "g": "445203"
+      },
+      "after": {
+        "n": "榕城区",
+        "c": "揭阳市",
+        "p": "广东省",
+        "g": "445202"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 24,
+      "boundaryId": "62558664B45601911634993",
+      "sourceName": "Wanshan District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "万山区",
+        "c": "铜仁市",
+        "p": "贵州省",
+        "g": "520603"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 29,
+      "boundaryId": "62558664B98574338369090",
+      "sourceName": "Funing County",
+      "before": {
+        "n": "北戴河区",
+        "c": "秦皇岛市",
+        "p": "河北省",
+        "g": "130304"
+      },
+      "after": {
+        "n": "抚宁区",
+        "c": "秦皇岛市",
+        "p": "河北省",
+        "g": "130306"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 33,
+      "boundaryId": "62558664B56477929024316",
+      "sourceName": "Yindu District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "殷都区",
+        "c": "安阳市",
+        "p": "河南省",
+        "g": "410505"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 39,
+      "boundaryId": "62558664B94740075175457",
+      "sourceName": "Mingshan District",
+      "before": {
+        "n": "本溪满族自治县",
+        "c": "本溪市",
+        "p": "辽宁省",
+        "g": "210521"
+      },
+      "after": {
+        "n": "明山区",
+        "c": "本溪市",
+        "p": "辽宁省",
+        "g": "210504"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 51,
+      "boundaryId": "62558664B18394154758288",
+      "sourceName": "Ulanhot City",
+      "before": {
+        "n": "科尔沁右翼前旗",
+        "c": "兴安盟",
+        "p": "内蒙古自治区",
+        "g": "152221"
+      },
+      "after": {
+        "n": "乌兰浩特市",
+        "c": "兴安盟",
+        "p": "内蒙古自治区",
+        "g": "152201"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 55,
+      "boundaryId": "62558664B84450234664042",
+      "sourceName": "Yizhou",
+      "before": {
+        "n": "新星市",
+        "c": "",
+        "p": "新疆维吾尔自治区",
+        "g": "659011"
+      },
+      "after": {
+        "n": "伊州区",
+        "c": "哈密市",
+        "p": "新疆维吾尔自治区",
+        "g": "650502"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 70,
+      "boundaryId": "62558664B63882222003394",
+      "sourceName": "雙臺子區 (Shuāngtáizi Qū)",
+      "before": {
+        "n": "盘山县",
+        "c": "盘锦市",
+        "p": "辽宁省",
+        "g": "211122"
+      },
+      "after": {
+        "n": "双台子区",
+        "c": "盘锦市",
+        "p": "辽宁省",
+        "g": "211102"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 119,
+      "boundaryId": "62558664B90819025865718",
+      "sourceName": "Anyang County",
+      "before": {
+        "n": "殷都区",
+        "c": "安阳市",
+        "p": "河南省",
+        "g": "410505"
+      },
+      "after": {
+        "n": "安阳县",
+        "c": "安阳市",
+        "p": "河南省",
+        "g": "410522"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 141,
+      "boundaryId": "62558664B69216248381703",
+      "sourceName": "Bazhou District",
+      "before": {
+        "n": "恩阳区",
+        "c": "巴中市",
+        "p": "四川省",
+        "g": "511903"
+      },
+      "after": {
+        "n": "巴州区",
+        "c": "巴中市",
+        "p": "四川省",
+        "g": "511902"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 148,
+      "boundaryId": "62558664B22486100363189",
+      "sourceName": "Benxi Manchu Autonomous County",
+      "before": {
+        "n": "明山区",
+        "c": "本溪市",
+        "p": "辽宁省",
+        "g": "210504"
+      },
+      "after": {
+        "n": "本溪满族自治县",
+        "c": "本溪市",
+        "p": "辽宁省",
+        "g": "210521"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 155,
+      "boundaryId": "62558664B69894930565650",
+      "sourceName": "Bole City",
+      "before": {
+        "n": "双河市",
+        "c": "",
+        "p": "新疆维吾尔自治区",
+        "g": "659007"
+      },
+      "after": {
+        "n": "博乐市",
+        "c": "博尔塔拉蒙古自治州",
+        "p": "新疆维吾尔自治区",
+        "g": "652701"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 159,
+      "boundaryId": "62558664B80285127477887",
+      "sourceName": "Bozhou District",
+      "before": {
+        "n": "红花岗区",
+        "c": "遵义市",
+        "p": "贵州省",
+        "g": "520302"
+      },
+      "after": {
+        "n": "播州区",
+        "c": "遵义市",
+        "p": "贵州省",
+        "g": "520304"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 164,
+      "boundaryId": "62558664B39665521082446",
+      "sourceName": "Cangnan City",
+      "before": {
+        "n": "龙港市",
+        "c": "温州市",
+        "p": "浙江省",
+        "g": "330383"
+      },
+      "after": {
+        "n": "苍南县",
+        "c": "温州市",
+        "p": "浙江省",
+        "g": "330327"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 172,
+      "boundaryId": "62558664B6773775584691",
+      "sourceName": "Changdao County",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "蓬莱区",
+        "c": "烟台市",
+        "p": "山东省",
+        "g": "370614"
+      },
+      "kind": "missing-label",
+      "historicalName": "长岛县"
+    },
+    {
+      "index": 175,
+      "boundaryId": "62558664B7539850346010",
+      "sourceName": "Changjiang County",
+      "before": {
+        "n": "珠山区",
+        "c": "景德镇市",
+        "p": "江西省",
+        "g": "360203"
+      },
+      "after": {
+        "n": "昌江区",
+        "c": "景德镇市",
+        "p": "江西省",
+        "g": "360202"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 195,
+      "boundaryId": "62558664B24133119430252",
+      "sourceName": "Chengqu District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "潞州区",
+        "c": "长治市",
+        "p": "山西省",
+        "g": "140403"
+      },
+      "kind": "missing-label",
+      "historicalName": "城区"
+    },
+    {
+      "index": 221,
+      "boundaryId": "62558664B63422988053512",
+      "sourceName": "Daiyue District",
+      "before": {
+        "n": "泰山区",
+        "c": "泰安市",
+        "p": "山东省",
+        "g": "370902"
+      },
+      "after": {
+        "n": "岱岳区",
+        "c": "泰安市",
+        "p": "山东省",
+        "g": "370911"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 231,
+      "boundaryId": "62558664B49382146827812",
+      "sourceName": "Dashiqiao City",
+      "before": {
+        "n": "站前区",
+        "c": "营口市",
+        "p": "辽宁省",
+        "g": "210802"
+      },
+      "after": {
+        "n": "大石桥市",
+        "c": "营口市",
+        "p": "辽宁省",
+        "g": "210882"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 261,
+      "boundaryId": "62558664B56192638919194",
+      "sourceName": "Dongning County",
+      "before": {
+        "n": "绥芬河市",
+        "c": "牡丹江市",
+        "p": "黑龙江省",
+        "g": "231081"
+      },
+      "after": {
+        "n": "东宁市",
+        "c": "牡丹江市",
+        "p": "黑龙江省",
+        "g": "231086"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 263,
+      "boundaryId": "62558664B87949265834002",
+      "sourceName": "Dongshan District",
+      "before": {
+        "n": "兴安区",
+        "c": "鹤岗市",
+        "p": "黑龙江省",
+        "g": "230405"
+      },
+      "after": {
+        "n": "东山区",
+        "c": "鹤岗市",
+        "p": "黑龙江省",
+        "g": "230406"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 304,
+      "boundaryId": "62558664B67571294681189",
+      "sourceName": "Gaizhou City",
+      "before": {
+        "n": "鲅鱼圈区",
+        "c": "营口市",
+        "p": "辽宁省",
+        "g": "210804"
+      },
+      "after": {
+        "n": "盖州市",
+        "c": "营口市",
+        "p": "辽宁省",
+        "g": "210881"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 310,
+      "boundaryId": "62558664B44855958732298",
+      "sourceName": "Ganjingzi District",
+      "before": {
+        "n": "西岗区",
+        "c": "大连市",
+        "p": "辽宁省",
+        "g": "210203"
+      },
+      "after": {
+        "n": "甘井子区",
+        "c": "大连市",
+        "p": "辽宁省",
+        "g": "210211"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 313,
+      "boundaryId": "62558664B9595494932467",
+      "sourceName": "Gaolan County",
+      "before": {
+        "n": "安宁区",
+        "c": "兰州市",
+        "p": "甘肃省",
+        "g": "620105"
+      },
+      "after": {
+        "n": "皋兰县",
+        "c": "兰州市",
+        "p": "甘肃省",
+        "g": "620122"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 329,
+      "boundaryId": "62558664B35653078608320",
+      "sourceName": "Guixi City",
+      "before": {
+        "n": "月湖区",
+        "c": "鹰潭市",
+        "p": "江西省",
+        "g": "360602"
+      },
+      "after": {
+        "n": "贵溪市",
+        "c": "鹰潭市",
+        "p": "江西省",
+        "g": "360681"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 337,
+      "boundaryId": "62558664B81894551505964",
+      "sourceName": "Guyang County",
+      "before": {
+        "n": "青山区",
+        "c": "包头市",
+        "p": "内蒙古自治区",
+        "g": "150204"
+      },
+      "after": {
+        "n": "固阳县",
+        "c": "包头市",
+        "p": "内蒙古自治区",
+        "g": "150222"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 340,
+      "boundaryId": "62558664B9496053300630",
+      "sourceName": "Haidian District",
+      "before": {
+        "n": "石景山区",
+        "c": "",
+        "p": "北京市",
+        "g": "110107"
+      },
+      "after": {
+        "n": "海淀区",
+        "c": "北京市",
+        "p": "北京市",
+        "g": "110108"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 342,
+      "boundaryId": "62558664B19873812588702",
+      "sourceName": "Haigang District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "海港区",
+        "c": "秦皇岛市",
+        "p": "河北省",
+        "g": "130302"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 353,
+      "boundaryId": "62558664B8564933881373",
+      "sourceName": "Hongshan District",
+      "before": {
+        "n": "武昌区",
+        "c": "武汉市",
+        "p": "湖北省",
+        "g": "420106"
+      },
+      "after": {
+        "n": "洪山区",
+        "c": "武汉市",
+        "p": "湖北省",
+        "g": "420111"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 377,
+      "boundaryId": "62558664B99421521416088",
+      "sourceName": "Luyang District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "庐阳区",
+        "c": "合肥市",
+        "p": "安徽省",
+        "g": "340103"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 392,
+      "boundaryId": "62558664B6759482486519",
+      "sourceName": "Meilie District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "三元区",
+        "c": "三明市",
+        "p": "福建省",
+        "g": "350404"
+      },
+      "kind": "missing-label",
+      "historicalName": "梅列区"
+    },
+    {
+      "index": 399,
+      "boundaryId": "62558664B63718363408700",
+      "sourceName": "Nanqiao District",
+      "before": {
+        "n": "琅琊区",
+        "c": "滁州市",
+        "p": "安徽省",
+        "g": "341102"
+      },
+      "after": {
+        "n": "南谯区",
+        "c": "滁州市",
+        "p": "安徽省",
+        "g": "341103"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 453,
+      "boundaryId": "62558664B61219348867830",
+      "sourceName": "Fuhai County",
+      "before": {
+        "n": "北屯市",
+        "c": "",
+        "p": "新疆维吾尔自治区",
+        "g": "659005"
+      },
+      "after": {
+        "n": "福海县",
+        "c": "阿勒泰地区",
+        "p": "新疆维吾尔自治区",
+        "g": "654323"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 506,
+      "boundaryId": "62558664B47591573440308",
+      "sourceName": "Tieling County",
+      "before": {
+        "n": "银州区",
+        "c": "铁岭市",
+        "p": "辽宁省",
+        "g": "211202"
+      },
+      "after": {
+        "n": "铁岭县",
+        "c": "铁岭市",
+        "p": "辽宁省",
+        "g": "211221"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 532,
+      "boundaryId": "62558664B92570179195559",
+      "sourceName": "Xiaoshan District",
+      "before": {
+        "n": "钱塘区",
+        "c": "杭州市",
+        "p": "浙江省",
+        "g": "330114"
+      },
+      "after": {
+        "n": "萧山区",
+        "c": "杭州市",
+        "p": "浙江省",
+        "g": "330109"
+      },
+      "kind": "wrong-label",
+      "note": "原萧山区范围后来部分划入钱塘区，2017几何不能当作当前县界。"
+    },
+    {
+      "index": 603,
+      "boundaryId": "62558664B71788995104860",
+      "sourceName": "Luolong District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "洛龙区",
+        "c": "洛阳市",
+        "p": "河南省",
+        "g": "410311"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 642,
+      "boundaryId": "62558664B93273260521503",
+      "sourceName": "Shangganling District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "友好区",
+        "c": "伊春市",
+        "p": "黑龙江省",
+        "g": "230719"
+      },
+      "kind": "missing-label",
+      "historicalName": "上甘岭区"
+    },
+    {
+      "index": 652,
+      "boundaryId": "62558664B98908075600377",
+      "sourceName": "Gangzha District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "崇川区",
+        "c": "南通市",
+        "p": "江苏省",
+        "g": "320613"
+      },
+      "kind": "missing-label",
+      "historicalName": "港闸区"
+    },
+    {
+      "index": 661,
+      "boundaryId": "62558664B88009171419954",
+      "sourceName": "Ruoqiang County",
+      "before": {
+        "n": "铁门关市",
+        "c": "",
+        "p": "新疆维吾尔自治区",
+        "g": "659006"
+      },
+      "after": {
+        "n": "若羌县",
+        "c": "巴音郭楞蒙古自治州",
+        "p": "新疆维吾尔自治区",
+        "g": "652824"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 685,
+      "boundaryId": "62558664B78448321086078",
+      "sourceName": "Yinzhou District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "银州区",
+        "c": "铁岭市",
+        "p": "辽宁省",
+        "g": "211202"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 693,
+      "boundaryId": "62558664B19614422324056",
+      "sourceName": "Qingpu District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "清江浦区",
+        "c": "淮安市",
+        "p": "江苏省",
+        "g": "320812"
+      },
+      "kind": "missing-label",
+      "historicalName": "清浦区"
+    },
+    {
+      "index": 712,
+      "boundaryId": "62558664B10171347066584",
+      "sourceName": "Suifenhe City",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "绥芬河市",
+        "c": "牡丹江市",
+        "p": "黑龙江省",
+        "g": "231081"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 726,
+      "boundaryId": "62558664B24483333646782",
+      "sourceName": "Jili District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "孟津区",
+        "c": "洛阳市",
+        "p": "河南省",
+        "g": "410308"
+      },
+      "kind": "missing-label",
+      "historicalName": "吉利区"
+    },
+    {
+      "index": 762,
+      "boundaryId": "62558664B42659654978859",
+      "sourceName": "Yueyang County",
+      "before": {
+        "n": "岳阳楼区",
+        "c": "岳阳市",
+        "p": "湖南省",
+        "g": "430602"
+      },
+      "after": {
+        "n": "岳阳县",
+        "c": "岳阳市",
+        "p": "湖南省",
+        "g": "430621"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 769,
+      "boundaryId": "62558664B36059125685257",
+      "sourceName": "Erenhot City",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "二连浩特市",
+        "c": "锡林郭勒盟",
+        "p": "内蒙古自治区",
+        "g": "152501"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 803,
+      "boundaryId": "62558664B38857978990619",
+      "sourceName": "Yongdeng County",
+      "before": {
+        "n": "红古区",
+        "c": "兰州市",
+        "p": "甘肃省",
+        "g": "620111"
+      },
+      "after": {
+        "n": "永登县",
+        "c": "兰州市",
+        "p": "甘肃省",
+        "g": "620121"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 807,
+      "boundaryId": "62558664B91450475476870",
+      "sourceName": "Wuchang District",
+      "before": {
+        "n": "洪山区",
+        "c": "武汉市",
+        "p": "湖北省",
+        "g": "420111"
+      },
+      "after": {
+        "n": "武昌区",
+        "c": "武汉市",
+        "p": "湖北省",
+        "g": "420106"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 844,
+      "boundaryId": "62558664B9155243010292",
+      "sourceName": "Pishan County",
+      "before": {
+        "n": "昆玉市",
+        "c": "",
+        "p": "新疆维吾尔自治区",
+        "g": "659009"
+      },
+      "after": {
+        "n": "皮山县",
+        "c": "和田地区",
+        "p": "新疆维吾尔自治区",
+        "g": "653223"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 863,
+      "boundaryId": "62558664B30758907030480",
+      "sourceName": "Xinjian County",
+      "before": {
+        "n": "红谷滩区",
+        "c": "南昌市",
+        "p": "江西省",
+        "g": "360113"
+      },
+      "after": {
+        "n": "新建区",
+        "c": "南昌市",
+        "p": "江西省",
+        "g": "360112"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 908,
+      "boundaryId": "62558664B67094368970456",
+      "sourceName": "Lishu County",
+      "before": {
+        "n": "铁西区",
+        "c": "四平市",
+        "p": "吉林省",
+        "g": "220302"
+      },
+      "after": {
+        "n": "梨树县",
+        "c": "四平市",
+        "p": "吉林省",
+        "g": "220322"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 950,
+      "boundaryId": "62558664B80805817650684",
+      "sourceName": "Fuxin Mongol Autonomous County",
+      "before": {
+        "n": "新邱区",
+        "c": "阜新市",
+        "p": "辽宁省",
+        "g": "210903"
+      },
+      "after": {
+        "n": "阜新蒙古族自治县",
+        "c": "阜新市",
+        "p": "辽宁省",
+        "g": "210921"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 963,
+      "boundaryId": "62558664B67376166727685",
+      "sourceName": "Jiangning District",
+      "before": {
+        "n": "雨花台区",
+        "c": "南京市",
+        "p": "江苏省",
+        "g": "320114"
+      },
+      "after": {
+        "n": "江宁区",
+        "c": "南京市",
+        "p": "江苏省",
+        "g": "320115"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 970,
+      "boundaryId": "62558664B14203232928009",
+      "sourceName": "Tacheng City",
+      "before": {
+        "n": "白杨市",
+        "c": "",
+        "p": "新疆维吾尔自治区",
+        "g": "659012"
+      },
+      "after": {
+        "n": "塔城市",
+        "c": "塔城地区",
+        "p": "新疆维吾尔自治区",
+        "g": "654201"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 972,
+      "boundaryId": "62558664B74252938446569",
+      "sourceName": "Horqin Right Front Banner",
+      "before": {
+        "n": "乌兰浩特市",
+        "c": "兴安盟",
+        "p": "内蒙古自治区",
+        "g": "152201"
+      },
+      "after": {
+        "n": "科尔沁右翼前旗",
+        "c": "兴安盟",
+        "p": "内蒙古自治区",
+        "g": "152221"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 984,
+      "boundaryId": "62558664B83659770445689",
+      "sourceName": "Puyang County",
+      "before": {
+        "n": "华龙区",
+        "c": "濮阳市",
+        "p": "河南省",
+        "g": "410902"
+      },
+      "after": {
+        "n": "濮阳县",
+        "c": "濮阳市",
+        "p": "河南省",
+        "g": "410928"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 990,
+      "boundaryId": "62558664B91708784791655",
+      "sourceName": "Yuehu District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "月湖区",
+        "c": "鹰潭市",
+        "p": "江西省",
+        "g": "360602"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 999,
+      "boundaryId": "62558664B31818552417757",
+      "sourceName": "Yuhang District",
+      "before": {
+        "n": "临平区",
+        "c": "杭州市",
+        "p": "浙江省",
+        "g": "330113"
+      },
+      "after": {
+        "n": "余杭区",
+        "c": "杭州市",
+        "p": "浙江省",
+        "g": "330110"
+      },
+      "kind": "wrong-label",
+      "note": "原余杭区后来分为余杭区、临平区，2017几何不能当作当前县界。"
+    },
+    {
+      "index": 1000,
+      "boundaryId": "62558664B30198695661235",
+      "sourceName": "Shigu District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "石鼓区",
+        "c": "衡阳市",
+        "p": "湖南省",
+        "g": "430407"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1016,
+      "boundaryId": "62558664B86063178787535",
+      "sourceName": "Xi'an District",
+      "before": {
+        "n": "龙山区",
+        "c": "辽源市",
+        "p": "吉林省",
+        "g": "220402"
+      },
+      "after": {
+        "n": "西安区",
+        "c": "辽源市",
+        "p": "吉林省",
+        "g": "220403"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1022,
+      "boundaryId": "62558664B7046923819859",
+      "sourceName": "Kangle County",
+      "before": {
+        "n": "莲花山风景林自然保护区",
+        "c": "",
+        "p": "甘肃省",
+        "g": "629800"
+      },
+      "after": {
+        "n": "康乐县",
+        "c": "临夏回族自治州",
+        "p": "甘肃省",
+        "g": "622922"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1023,
+      "boundaryId": "62558664B16406304170602",
+      "sourceName": "Kashgar City",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "喀什市",
+        "c": "喀什地区",
+        "p": "新疆维吾尔自治区",
+        "g": "653101"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1032,
+      "boundaryId": "62558664B25635064896936",
+      "sourceName": "Honghuagang District",
+      "before": {
+        "n": "汇川区",
+        "c": "遵义市",
+        "p": "贵州省",
+        "g": "520303"
+      },
+      "after": {
+        "n": "红花岗区",
+        "c": "遵义市",
+        "p": "贵州省",
+        "g": "520302"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1041,
+      "boundaryId": "62558664B86607054979232",
+      "sourceName": "Yijiang District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "弋江区",
+        "c": "芜湖市",
+        "p": "安徽省",
+        "g": "340209"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1043,
+      "boundaryId": "62558664B32712743860951",
+      "sourceName": "Honggu",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "红古区",
+        "c": "兰州市",
+        "p": "甘肃省",
+        "g": "620111"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1064,
+      "boundaryId": "62558664B70516301346172",
+      "sourceName": "Xiangqiao District",
+      "before": {
+        "n": "潮安区",
+        "c": "潮州市",
+        "p": "广东省",
+        "g": "445103"
+      },
+      "after": {
+        "n": "湘桥区",
+        "c": "潮州市",
+        "p": "广东省",
+        "g": "445102"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1065,
+      "boundaryId": "62558664B5942971866643",
+      "sourceName": "Yuhuatai District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "雨花台区",
+        "c": "南京市",
+        "p": "江苏省",
+        "g": "320114"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1107,
+      "boundaryId": "62558664B93177081349923",
+      "sourceName": "Hengyang County",
+      "before": {
+        "n": "石鼓区",
+        "c": "衡阳市",
+        "p": "湖南省",
+        "g": "430407"
+      },
+      "after": {
+        "n": "衡阳县",
+        "c": "衡阳市",
+        "p": "湖南省",
+        "g": "430421"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1121,
+      "boundaryId": "62558664B88263416784118",
+      "sourceName": "Sonid Right Banner",
+      "before": {
+        "n": "二连浩特市",
+        "c": "锡林郭勒盟",
+        "p": "内蒙古自治区",
+        "g": "152501"
+      },
+      "after": {
+        "n": "苏尼特右旗",
+        "c": "锡林郭勒盟",
+        "p": "内蒙古自治区",
+        "g": "152524"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1131,
+      "boundaryId": "62558664B42821097796221",
+      "sourceName": "Jingtie District",
+      "before": {
+        "n": "嘉峪关市",
+        "c": "嘉峪关市",
+        "p": "甘肃省",
+        "g": "620200"
+      },
+      "after": {
+        "n": "镜铁区（旧界）",
+        "c": "嘉峪关市",
+        "p": "甘肃省",
+        "g": "620200"
+      },
+      "kind": "wrong-label",
+      "historicalName": "镜铁区"
+    },
+    {
+      "index": 1141,
+      "boundaryId": "62558664B35044070765760",
+      "sourceName": "聖方濟各堂區 São Francisco Xavier",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "圣方济各堂区",
+        "c": "澳门特别行政区",
+        "p": "澳门特别行政区",
+        "g": "820000"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1148,
+      "boundaryId": "62558664B86105287185312",
+      "sourceName": "Wujin District",
+      "before": {
+        "n": "钟楼区",
+        "c": "常州市",
+        "p": "江苏省",
+        "g": "320404"
+      },
+      "after": {
+        "n": "武进区",
+        "c": "常州市",
+        "p": "江苏省",
+        "g": "320412"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1178,
+      "boundaryId": "62558664B10559909785532",
+      "sourceName": "Meijiang District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "梅江区",
+        "c": "梅州市",
+        "p": "广东省",
+        "g": "441402"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1205,
+      "boundaryId": "62558664B47357224997171",
+      "sourceName": "Zhanqian District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "站前区",
+        "c": "营口市",
+        "p": "辽宁省",
+        "g": "210802"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1220,
+      "boundaryId": "62558664B9822797106398",
+      "sourceName": "兴隆台区 (Xīnglóngtái Qū)",
+      "before": {
+        "n": "双台子区",
+        "c": "盘锦市",
+        "p": "辽宁省",
+        "g": "211102"
+      },
+      "after": {
+        "n": "兴隆台区",
+        "c": "盘锦市",
+        "p": "辽宁省",
+        "g": "211103"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1222,
+      "boundaryId": "62558664B36080773191925",
+      "sourceName": "Tiexi District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "铁西区",
+        "c": "四平市",
+        "p": "吉林省",
+        "g": "220302"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1228,
+      "boundaryId": "62558664B5833750524291",
+      "sourceName": "Hecheng District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "鹤城区",
+        "c": "怀化市",
+        "p": "湖南省",
+        "g": "431202"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1293,
+      "boundaryId": "62558664B18583369188935",
+      "sourceName": "Wuhe County",
+      "before": {
+        "n": "淮上区",
+        "c": "蚌埠市",
+        "p": "安徽省",
+        "g": "340311"
+      },
+      "after": {
+        "n": "五河县",
+        "c": "蚌埠市",
+        "p": "安徽省",
+        "g": "340322"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1350,
+      "boundaryId": "62558664B41257205730190",
+      "sourceName": "Tianning District",
+      "before": {
+        "n": "武进区",
+        "c": "常州市",
+        "p": "江苏省",
+        "g": "320412"
+      },
+      "after": {
+        "n": "天宁区",
+        "c": "常州市",
+        "p": "江苏省",
+        "g": "320402"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1357,
+      "boundaryId": "62558664B11406324266095",
+      "sourceName": "Tangwanghe District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "汤旺县",
+        "c": "伊春市",
+        "p": "黑龙江省",
+        "g": "230723"
+      },
+      "kind": "missing-label",
+      "historicalName": "汤旺河区"
+    },
+    {
+      "index": 1363,
+      "boundaryId": "62558664B53891602886125",
+      "sourceName": "Taishan District",
+      "before": {
+        "n": "岱岳区",
+        "c": "泰安市",
+        "p": "山东省",
+        "g": "370911"
+      },
+      "after": {
+        "n": "泰山区",
+        "c": "泰安市",
+        "p": "山东省",
+        "g": "370902"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1401,
+      "boundaryId": "62558664B60039666521317",
+      "sourceName": "Jiulongpo District",
+      "before": {
+        "n": "大渡口区",
+        "c": "",
+        "p": "重庆市",
+        "g": "500104"
+      },
+      "after": {
+        "n": "九龙坡区",
+        "c": "重庆市",
+        "p": "重庆市",
+        "g": "500107"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1402,
+      "boundaryId": "62558664B25735354417276",
+      "sourceName": "Yichun District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "伊美区",
+        "c": "伊春市",
+        "p": "黑龙江省",
+        "g": "230717"
+      },
+      "kind": "missing-label",
+      "historicalName": "伊春区"
+    },
+    {
+      "index": 1404,
+      "boundaryId": "62558664B28924499867484",
+      "sourceName": "Fuxing District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "复兴区",
+        "c": "邯郸市",
+        "p": "河北省",
+        "g": "130404"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1411,
+      "boundaryId": "62558664B80061393649826",
+      "sourceName": "铁门关市",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "铁门关市",
+        "c": "铁门关市",
+        "p": "新疆维吾尔自治区",
+        "g": "659006"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1413,
+      "boundaryId": "62558664B22080335511958",
+      "sourceName": "路氹填海區 Zona de Aterro entre Taipa e Coloane",
+      "before": {
+        "n": "澳门特别行政区",
+        "c": "",
+        "p": "澳门特别行政区",
+        "g": "820000"
+      },
+      "after": {
+        "n": "路氹填海区",
+        "c": "澳门特别行政区",
+        "p": "澳门特别行政区",
+        "g": "820000"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1415,
+      "boundaryId": "62558664B29410794950581",
+      "sourceName": "西沙群岛",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "西沙区",
+        "c": "三沙市",
+        "p": "海南省",
+        "g": "460302"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1416,
+      "boundaryId": "62558664B84439956336490",
+      "sourceName": "珠山区",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "珠山区",
+        "c": "景德镇市",
+        "p": "江西省",
+        "g": "360203"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1418,
+      "boundaryId": "62558664B94582625753095",
+      "sourceName": "嘉模堂區 Nossa Senhora do Carmo",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "嘉模堂区",
+        "c": "澳门特别行政区",
+        "p": "澳门特别行政区",
+        "g": "820000"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1451,
+      "boundaryId": "62558664B64223218734918",
+      "sourceName": "Zhonglou District",
+      "before": {
+        "n": "天宁区",
+        "c": "常州市",
+        "p": "江苏省",
+        "g": "320402"
+      },
+      "after": {
+        "n": "钟楼区",
+        "c": "常州市",
+        "p": "江苏省",
+        "g": "320404"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1452,
+      "boundaryId": "62558664B34381621229577",
+      "sourceName": "Zhongfang County",
+      "before": {
+        "n": "鹤城区",
+        "c": "怀化市",
+        "p": "湖南省",
+        "g": "431202"
+      },
+      "after": {
+        "n": "中方县",
+        "c": "怀化市",
+        "p": "湖南省",
+        "g": "431221"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1487,
+      "boundaryId": "62558664B22813326184841",
+      "sourceName": "Yuwangtai District",
+      "before": {
+        "n": "祥符区",
+        "c": "开封市",
+        "p": "河南省",
+        "g": "410212"
+      },
+      "after": {
+        "n": "禹王台区",
+        "c": "开封市",
+        "p": "河南省",
+        "g": "410205"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1507,
+      "boundaryId": "62558664B62779513740699",
+      "sourceName": "Yueyanglou District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "岳阳楼区",
+        "c": "岳阳市",
+        "p": "湖南省",
+        "g": "430602"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1544,
+      "boundaryId": "62558664B23453317253001",
+      "sourceName": "Yongnian County",
+      "before": {
+        "n": "丛台区",
+        "c": "邯郸市",
+        "p": "河北省",
+        "g": "130403"
+      },
+      "after": {
+        "n": "永年区",
+        "c": "邯郸市",
+        "p": "河北省",
+        "g": "130408"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1601,
+      "boundaryId": "62558664B88825196305992",
+      "sourceName": "Yanshi City",
+      "before": {
+        "n": "洛龙区",
+        "c": "洛阳市",
+        "p": "河南省",
+        "g": "410311"
+      },
+      "after": {
+        "n": "偃师区",
+        "c": "洛阳市",
+        "p": "河南省",
+        "g": "410307"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1621,
+      "boundaryId": "62558664B43540101980456",
+      "sourceName": "Xinqing District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "丰林县",
+        "c": "伊春市",
+        "p": "黑龙江省",
+        "g": "230724"
+      },
+      "kind": "missing-label",
+      "historicalName": "新青区"
+    },
+    {
+      "index": 1625,
+      "boundaryId": "62558664B53449309401",
+      "sourceName": "Xinlin District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "新林区",
+        "c": "大兴安岭地区",
+        "p": "黑龙江省",
+        "g": "232700"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1644,
+      "boundaryId": "62558664B8141227896838",
+      "sourceName": "Xing'an District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "兴安区",
+        "c": "鹤岗市",
+        "p": "黑龙江省",
+        "g": "230405"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1686,
+      "boundaryId": "62558664B97102578871373",
+      "sourceName": "Xiangfu District",
+      "before": {
+        "n": "禹王台区",
+        "c": "开封市",
+        "p": "河南省",
+        "g": "410205"
+      },
+      "after": {
+        "n": "祥符区",
+        "c": "开封市",
+        "p": "河南省",
+        "g": "410212"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1696,
+      "boundaryId": "62558664B24354876544482",
+      "sourceName": "Xiacheng District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "拱墅区",
+        "c": "杭州市",
+        "p": "浙江省",
+        "g": "330105"
+      },
+      "kind": "missing-label",
+      "historicalName": "下城区"
+    },
+    {
+      "index": 1715,
+      "boundaryId": "62558664B9981596700334",
+      "sourceName": "Wumahe District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "乌马河区（旧界）",
+        "c": "伊春市",
+        "p": "黑龙江省",
+        "g": "230700"
+      },
+      "kind": "missing-label",
+      "historicalName": "乌马河区",
+      "note": "2019年原乌马河区分属乌翠区、伊美区；没有新界线证据，保留旧界名称，仅确认伊春市。"
+    },
+    {
+      "index": 1741,
+      "boundaryId": "62558664B24921832637754",
+      "sourceName": "Shushan District",
+      "before": {
+        "n": "庐阳区",
+        "c": "合肥市",
+        "p": "安徽省",
+        "g": "340103"
+      },
+      "after": {
+        "n": "蜀山区",
+        "c": "合肥市",
+        "p": "安徽省",
+        "g": "340104"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1751,
+      "boundaryId": "62558664B3048998575023",
+      "sourceName": "Shufu County",
+      "before": {
+        "n": "喀什市",
+        "c": "喀什地区",
+        "p": "新疆维吾尔自治区",
+        "g": "653101"
+      },
+      "after": {
+        "n": "疏附县",
+        "c": "喀什地区",
+        "p": "新疆维吾尔自治区",
+        "g": "653121"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1783,
+      "boundaryId": "62558664B76355407219744",
+      "sourceName": "Xiongguan District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "雄关区（旧界）",
+        "c": "嘉峪关市",
+        "p": "甘肃省",
+        "g": "620200"
+      },
+      "kind": "missing-label",
+      "historicalName": "雄关区"
+    },
+    {
+      "index": 1793,
+      "boundaryId": "62558664B31461548313145",
+      "sourceName": "Xinqiu District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "新邱区",
+        "c": "阜新市",
+        "p": "辽宁省",
+        "g": "210903"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1799,
+      "boundaryId": "62558664B36909562740020",
+      "sourceName": "Shijingshan District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "石景山区",
+        "c": "北京市",
+        "p": "北京市",
+        "g": "110107"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1818,
+      "boundaryId": "62558664B60516162910752",
+      "sourceName": "Wanli District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "新建区",
+        "c": "南昌市",
+        "p": "江西省",
+        "g": "360112"
+      },
+      "kind": "missing-label",
+      "historicalName": "湾里区"
+    },
+    {
+      "index": 1827,
+      "boundaryId": "62558664B12226970479029",
+      "sourceName": "Shangcheng District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "上城区",
+        "c": "杭州市",
+        "p": "浙江省",
+        "g": "330102"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1891,
+      "boundaryId": "62558664B4931190993683",
+      "sourceName": "Qingshan District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "青山区",
+        "c": "包头市",
+        "p": "内蒙古自治区",
+        "g": "150204"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1896,
+      "boundaryId": "62558664B97305810367737",
+      "sourceName": "Qinghemen District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "清河门区",
+        "c": "阜新市",
+        "p": "辽宁省",
+        "g": "210905"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 1910,
+      "boundaryId": "62558664B84666277318320",
+      "sourceName": "Qiezihe District",
+      "before": {
+        "n": "桃山区",
+        "c": "七台河市",
+        "p": "黑龙江省",
+        "g": "230903"
+      },
+      "after": {
+        "n": "茄子河区",
+        "c": "七台河市",
+        "p": "黑龙江省",
+        "g": "230904"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 1968,
+      "boundaryId": "62558664B15090522295954",
+      "sourceName": "Qiaodong District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "襄都区",
+        "c": "邢台市",
+        "p": "河北省",
+        "g": "130502"
+      },
+      "kind": "missing-label",
+      "historicalName": "桥东区"
+    },
+    {
+      "index": 1999,
+      "boundaryId": "62558664B86899844734859",
+      "sourceName": "Xilin District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "金林区",
+        "c": "伊春市",
+        "p": "黑龙江省",
+        "g": "230751"
+      },
+      "kind": "missing-label",
+      "historicalName": "西林区"
+    },
+    {
+      "index": 2012,
+      "boundaryId": "62558664B11945859768529",
+      "sourceName": "Pei County",
+      "before": {
+        "n": "丰县",
+        "c": "徐州市",
+        "p": "江苏省",
+        "g": "320321"
+      },
+      "after": {
+        "n": "沛县",
+        "c": "徐州市",
+        "p": "江苏省",
+        "g": "320322"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2085,
+      "boundaryId": "62558664B12711260506507",
+      "sourceName": "Meixian District",
+      "before": {
+        "n": "梅江区",
+        "c": "梅州市",
+        "p": "广东省",
+        "g": "441402"
+      },
+      "after": {
+        "n": "梅县区",
+        "c": "梅州市",
+        "p": "广东省",
+        "g": "441403"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2104,
+      "boundaryId": "62558664B16763488336900",
+      "sourceName": "Luozhuang District",
+      "before": {
+        "n": "兰陵县",
+        "c": "临沂市",
+        "p": "山东省",
+        "g": "371324"
+      },
+      "after": {
+        "n": "罗庄区",
+        "c": "临沂市",
+        "p": "山东省",
+        "g": "371311"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2129,
+      "boundaryId": "62558664B84555864466285",
+      "sourceName": "Longyao County",
+      "before": {
+        "n": "柏乡县",
+        "c": "邢台市",
+        "p": "河北省",
+        "g": "130524"
+      },
+      "after": {
+        "n": "隆尧县",
+        "c": "邢台市",
+        "p": "河北省",
+        "g": "130525"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2136,
+      "boundaryId": "62558664B21091683919120",
+      "sourceName": "Longshan District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "龙山区",
+        "c": "辽源市",
+        "p": "吉林省",
+        "g": "220402"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 2238,
+      "boundaryId": "62558664B11483672826285",
+      "sourceName": "Juancheng County",
+      "before": {
+        "n": "濮阳县",
+        "c": "濮阳市",
+        "p": "河南省",
+        "g": "410928"
+      },
+      "after": {
+        "n": "鄄城县",
+        "c": "菏泽市",
+        "p": "山东省",
+        "g": "371726"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2248,
+      "boundaryId": "62558664B66684701290083",
+      "sourceName": "Jinzhou Economic and Technical Development Zone",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "锦州经济技术开发区",
+        "c": "锦州市",
+        "p": "辽宁省",
+        "g": "210700"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 2292,
+      "boundaryId": "62558664B88492749117062",
+      "sourceName": "Jiedong District",
+      "before": {
+        "n": "榕城区",
+        "c": "揭阳市",
+        "p": "广东省",
+        "g": "445202"
+      },
+      "after": {
+        "n": "揭东区",
+        "c": "揭阳市",
+        "p": "广东省",
+        "g": "445203"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2318,
+      "boundaryId": "62558664B6123434548143",
+      "sourceName": "Manzhouli",
+      "before": {
+        "n": "扎赉诺尔区",
+        "c": "呼伦贝尔市",
+        "p": "内蒙古自治区",
+        "g": "150703"
+      },
+      "after": {
+        "n": "满洲里市",
+        "c": "呼伦贝尔市",
+        "p": "内蒙古自治区",
+        "g": "150781"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2337,
+      "boundaryId": "62558664B95158292282628",
+      "sourceName": "Huzhong District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "呼中区",
+        "c": "大兴安岭地区",
+        "p": "黑龙江省",
+        "g": "232700"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 2342,
+      "boundaryId": "62558664B89073704268850",
+      "sourceName": "Huimin District",
+      "before": {
+        "n": "玉泉区",
+        "c": "呼和浩特市",
+        "p": "内蒙古自治区",
+        "g": "150104"
+      },
+      "after": {
+        "n": "回民区",
+        "c": "呼和浩特市",
+        "p": "内蒙古自治区",
+        "g": "150103"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2345,
+      "boundaryId": "62558664B68200355931123",
+      "sourceName": "Huichuan District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "汇川区",
+        "c": "遵义市",
+        "p": "贵州省",
+        "g": "520303"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 2370,
+      "boundaryId": "62558664B94245938639787",
+      "sourceName": "Hualong District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "华龙区",
+        "c": "濮阳市",
+        "p": "河南省",
+        "g": "410902"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 2375,
+      "boundaryId": "62558664B82647046328654",
+      "sourceName": "Huaishang District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "淮上区",
+        "c": "蚌埠市",
+        "p": "安徽省",
+        "g": "340311"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 2451,
+      "boundaryId": "62558664B81897964248321",
+      "sourceName": "Lenghu Administrative Zone",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "茫崖市",
+        "c": "海西蒙古族藏族自治州",
+        "p": "青海省",
+        "g": "632803"
+      },
+      "kind": "missing-label",
+      "historicalName": "冷湖行政委员会"
+    },
+    {
+      "index": 2466,
+      "boundaryId": "62558664B22785406682530",
+      "sourceName": "Lanling",
+      "before": {
+        "n": "罗庄区",
+        "c": "临沂市",
+        "p": "山东省",
+        "g": "371311"
+      },
+      "after": {
+        "n": "兰陵县",
+        "c": "临沂市",
+        "p": "山东省",
+        "g": "371324"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2468,
+      "boundaryId": "62558664B62332289284850",
+      "sourceName": "Langya District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "琅琊区",
+        "c": "滁州市",
+        "p": "安徽省",
+        "g": "341102"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 2559,
+      "boundaryId": "62558664B7109973939666",
+      "sourceName": "Feng County",
+      "before": {
+        "n": "沛县",
+        "c": "徐州市",
+        "p": "江苏省",
+        "g": "320322"
+      },
+      "after": {
+        "n": "丰县",
+        "c": "徐州市",
+        "p": "江苏省",
+        "g": "320321"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2604,
+      "boundaryId": "62558664B50472754147398",
+      "sourceName": "Dongliao County",
+      "before": {
+        "n": "西安区",
+        "c": "辽源市",
+        "p": "吉林省",
+        "g": "220403"
+      },
+      "after": {
+        "n": "东辽县",
+        "c": "辽源市",
+        "p": "吉林省",
+        "g": "220422"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2616,
+      "boundaryId": "62558664B83566254867677",
+      "sourceName": "Dadukou District",
+      "before": {
+        "n": "九龙坡区",
+        "c": "",
+        "p": "重庆市",
+        "g": "500107"
+      },
+      "after": {
+        "n": "大渡口区",
+        "c": "重庆市",
+        "p": "重庆市",
+        "g": "500104"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2636,
+      "boundaryId": "62558664B63025908645317",
+      "sourceName": "Chengqu District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "平城区",
+        "c": "大同市",
+        "p": "山西省",
+        "g": "140213"
+      },
+      "kind": "missing-label",
+      "historicalName": "城区"
+    },
+    {
+      "index": 2648,
+      "boundaryId": "62558664B30438857534773",
+      "sourceName": "Chao'an District",
+      "before": {
+        "n": "湘桥区",
+        "c": "潮州市",
+        "p": "广东省",
+        "g": "445102"
+      },
+      "after": {
+        "n": "潮安区",
+        "c": "潮州市",
+        "p": "广东省",
+        "g": "445103"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2667,
+      "boundaryId": "62558664B48067399197905",
+      "sourceName": "Changcheng District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "长城区（旧界）",
+        "c": "嘉峪关市",
+        "p": "甘肃省",
+        "g": "620200"
+      },
+      "kind": "missing-label",
+      "historicalName": "长城区"
+    },
+    {
+      "index": 2672,
+      "boundaryId": "62558664B39845229590564",
+      "sourceName": "Chahar Right Front Banner",
+      "before": {
+        "n": "集宁区",
+        "c": "乌兰察布市",
+        "p": "内蒙古自治区",
+        "g": "150902"
+      },
+      "after": {
+        "n": "察哈尔右翼前旗",
+        "c": "乌兰察布市",
+        "p": "内蒙古自治区",
+        "g": "150926"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2691,
+      "boundaryId": "62558664B73834872841219",
+      "sourceName": "Bijiang District",
+      "before": {
+        "n": "万山区",
+        "c": "铜仁市",
+        "p": "贵州省",
+        "g": "520603"
+      },
+      "after": {
+        "n": "碧江区",
+        "c": "铜仁市",
+        "p": "贵州省",
+        "g": "520602"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2697,
+      "boundaryId": "62558664B5688430660407",
+      "sourceName": "Beidaihe District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "北戴河区",
+        "c": "秦皇岛市",
+        "p": "河北省",
+        "g": "130304"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 2727,
+      "boundaryId": "62558664B17673429471005",
+      "sourceName": "Guang'an District",
+      "before": {
+        "n": "前锋区",
+        "c": "广安市",
+        "p": "四川省",
+        "g": "511603"
+      },
+      "after": {
+        "n": "广安区",
+        "c": "广安市",
+        "p": "四川省",
+        "g": "511602"
+      },
+      "kind": "wrong-label"
+    },
+    {
+      "index": 2791,
+      "boundaryId": "62558664B88008131441276",
+      "sourceName": "Baixiang County",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "柏乡县",
+        "c": "邢台市",
+        "p": "河北省",
+        "g": "130524"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 2805,
+      "boundaryId": "62558664B65625239789432",
+      "sourceName": "Anning District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "安宁区",
+        "c": "兰州市",
+        "p": "甘肃省",
+        "g": "620105"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 2828,
+      "boundaryId": "62558664B43572881614472",
+      "sourceName": "Wuying District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "丰林县",
+        "c": "伊春市",
+        "p": "黑龙江省",
+        "g": "230724"
+      },
+      "kind": "missing-label",
+      "historicalName": "五营区"
+    },
+    {
+      "index": 2839,
+      "boundaryId": "62558664B81542523317474",
+      "sourceName": "Xinxing District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "新兴区",
+        "c": "七台河市",
+        "p": "黑龙江省",
+        "g": "230902"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 2840,
+      "boundaryId": "62558664B45736924434752",
+      "sourceName": "Taoshan District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "桃山区",
+        "c": "七台河市",
+        "p": "黑龙江省",
+        "g": "230903"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 2842,
+      "boundaryId": "62558664B16336954054360",
+      "sourceName": "Congtai District",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "丛台区",
+        "c": "邯郸市",
+        "p": "河北省",
+        "g": "130403"
+      },
+      "kind": "missing-label"
+    },
+    {
+      "index": 2849,
+      "boundaryId": "62558664B36300803449517",
+      "sourceName": "Macau",
+      "before": {
+        "n": "",
+        "c": "",
+        "p": "",
+        "g": ""
+      },
+      "after": {
+        "n": "澳门半岛",
+        "c": "澳门特别行政区",
+        "p": "澳门特别行政区",
+        "g": "820000"
+      },
+      "kind": "missing-label"
+    }
+  ]
+}

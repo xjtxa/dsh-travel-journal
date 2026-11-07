@@ -1,0 +1,30 @@
+{
+  "source": "OCHA ROAP China COD-AB",
+  "url": "https://data.humdata.org/dataset/17a2aaa2-dea9-4a2e-8b3f-92d1bdfb850c/resource/9e67ddf9-ce26-4b7a-82b1-51e5ca0714c8/download/chn_adm_ocha_2020_shp.zip",
+  "sourceSha256": "f6a1f0fd969dbcc830e395c8211746730a80e8429585e045c6b0da92cd6e0ec9",
+  "published": "2020-09-10",
+  "reviewed": "2024-10",
+  "boundaryYear": null,
+  "boundaryYearNote": "The publisher states the date boundaries were established is unknown; publication/review dates are not geometry dates.",
+  "license": "CC BY 3.0 IGO",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0/igo/legalcode",
+  "originalProvinceCount": 34,
+  "originalCityCount": 361,
+  "provinceCount": 34,
+  "cityCount": 360,
+  "coordinateDecimals": 6,
+  "simplified": false,
+  "codeFacts": {
+    "url": "https://raw.githubusercontent.com/yescallop/areacodes/master/data/2024.txt",
+    "sha256": "4bfd0a05caa1abdf6add54301eebb256156a0044010244ecdb659062cdbc0313",
+    "asOf": "2024-12-31"
+  },
+  "nameCorrections": {
+    "莱芜市": "济南市",
+    "那曲地区": "那曲市",
+    "海西蒙古族自治州": "海西蒙古族藏族自治州",
+    "株州市": "株洲市",
+    "香港": "香港特别行政区",
+    "澳门": "澳门特别行政区"
+  }
+}

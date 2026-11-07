@@ -1,0 +1,74 @@
+{
+  "name": "dsh-travel-journal",
+  "version": "0.2.5",
+  "description": "旅行记忆：本地原图归档、照片标签和城市足迹",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xjtxa/dsh-travel-journal.git"
+  },
+  "homepage": "https://github.com/xjtxa/dsh-travel-journal#readme",
+  "bugs": {
+    "url": "https://github.com/xjtxa/dsh-travel-journal/issues"
+  },
+  "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "travel",
+    "photo-journal",
+    "offline-map"
+  ],
+  "main": "./src/host.mjs",
+  "exports": {
+    ".": "./src/host.mjs",
+    "./client": "./client/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "client",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "THIRD-PARTY-NOTICES.md",
+    "demo",
+    "data/geo",
+    "tools"
+  ],
+  "engines": {
+    "node": ">=22.13.0",
+    "dsh": ">=0.2.1-rc.5 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "slots"
+      ],
+      "external": [
+        "react"
+      ]
+    }
+  },
+  "scripts": {
+    "check": "node --check src/host.mjs && node --check src/storage.mjs && node --check src/engine.mjs && node --check src/import-queue.mjs && node --check src/model.mjs && node --check src/enrichment.mjs && node --check src/geo.mjs && node --check client/client.js && node --check src/preview-cache.mjs && node --check src/search-index.mjs"
+  },
+  "dependencies": {
+    "busboy": "1.6.0",
+    "exifr": "7.1.3",
+    "sharp": "0.35.5"
+  },
+  "author": "大肥鱼",
+  "license": "UNLICENSED"
+}
