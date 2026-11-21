@@ -1,6 +1,6 @@
 {
   "name": "dsh-travel-journal",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "旅行记忆：本地原图归档、照片标签和城市足迹",
   "repository": {
     "type": "git",
@@ -62,7 +62,7 @@
     }
   },
   "scripts": {
-    "check": "node --check src/host.mjs && node --check src/storage.mjs && node --check src/engine.mjs && node --check src/import-queue.mjs && node --check src/model.mjs && node --check src/enrichment.mjs && node --check src/geo.mjs && node --check client/client.js && node --check src/preview-cache.mjs && node --check src/search-index.mjs"
+    "check": "node --check src/host.mjs && node --check src/desktop-files.mjs && node --check src/storage.mjs && node --check src/engine.mjs && node --check src/import-queue.mjs && node --check src/model.mjs && node --check src/enrichment.mjs && node --check src/geo.mjs && node --check client/client.js && node --check src/preview-cache.mjs && node --check src/search-index.mjs"
   },
   "dependencies": {
     "busboy": "1.6.0",

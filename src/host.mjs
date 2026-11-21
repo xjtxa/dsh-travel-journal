@@ -4,12 +4,13 @@ import { createWriteStream } from 'node:fs';
 import { Transform } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 import { homedir } from 'node:os';
-import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
+import { basename, dirname, extname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Busboy from 'busboy';
 import { createGeoIndex } from './geo.mjs';
 import { createPreviewCache } from './preview-cache.mjs';
 import { controlDirectory, createFolderPicker, createStorageController } from './storage.mjs';
+import { createOriginalOpener } from './desktop-files.mjs';
 
 export const name = 'travel-journal';
 export const inject = ['webServer', 'connection', 'llm', 'agentDefaultModel', 'attachments'];
@@ -28,8 +29,9 @@ const BUNDLED_DEMO_DIR = fileURLToPath(new URL('../demo/', import.meta.url));
 const LOOPBACK_HOSTS = new Set(['127.0.0.1', '[::1]', 'localhost']);
 const LOOPBACK_PEERS = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1']);
 const IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/heic', 'image/heif', 'image/tiff', 'image/avif', 'image/bmp']);
+const IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.heic', '.heif', '.tif', '.tiff', '.avif', '.bmp']);
 const IMPORT_ROUTES = new Set(['/imports', '/imports/pick', '/imports/folder', '/imports/paths', '/imports/upload', '/imports/receive', '/imports/action']);
-const LIBRARY_ROUTES = new Set(['/record', '/records', '/search', '/map', '/media', '/retry-places', '/missing-locations',
+const LIBRARY_ROUTES = new Set(['/record', '/records', '/search', '/map', '/media', '/open-original', '/retry-places', '/missing-locations',
   '/archive', '/archive/covers', '/archive/cover',
   '/fill-missing-locations', '/reset-usage', '/import', '/demo', '/draft/commit', '/draft/cancel',
   '/edit-record', '/edit-photo', '/delete-record', '/delete-photo', '/reprocess']);
@@ -249,7 +251,7 @@ function missingOriginal() {
   return Object.assign(fail('原图在资料文件夹中缺失。重新导入同一张原图可补回档案。', 404), { code: 'TRAVEL_ORIGINAL_MISSING' });
 }
 
-async function sendOriginal(response, path, media, resource) {
+async function withVerifiedOriginal(path, media, resource, work) {
   const file = await open(path, 'r').catch(error => {
     if (!['ENOENT', 'ENOTDIR'].includes(error.code)) throw error;
     resource.assertStorage();
@@ -270,15 +272,20 @@ async function sendOriginal(response, path, media, resource) {
       }
     }
     resource.assertStorage();
+    return await work({ before, stream });
+  } finally { await file.close(); }
+}
+async function sendOriginal(response, path, media, resource) {
+  return withVerifiedOriginal(path, media, resource, async ({ before, stream }) => {
     response.setHeader('content-disposition', `attachment; filename*=UTF-8''${encodeURIComponent(downloadName(media))}`);
     responseHeaders(response, 200, media.metadata.mime);
     response.setHeader('content-length', String(before.size));
     await pipeline(stream(), response);
-  } finally { await file.close(); }
+  });
 }
 
 /** Local DSH host. Dependencies are explicit so HTTP tests never need a model or QQ. */
-export async function createTravelHost({ ctx, dataDir, controlDir = controlDirectory(dataDir), demoDir = BUNDLED_DEMO_DIR, createEngine, downloadMedia, inspectImage, createModelAdapter, fixedModel, createEnrichment, folderPicker = createFolderPicker(), diagnostic = async () => {} }) {
+export async function createTravelHost({ ctx, dataDir, controlDir = controlDirectory(dataDir), demoDir = BUNDLED_DEMO_DIR, createEngine, downloadMedia, inspectImage, createModelAdapter, fixedModel, createEnrichment, folderPicker = createFolderPicker(), openOriginal = createOriginalOpener(), diagnostic = async () => {} }) {
   await diagnostic('host-enter');
   if (typeof ctx.connection?.requestRejection !== 'function' || typeof ctx.webServer?.register !== 'function') throw new Error('旅行记忆需要 DSH 0.2.1-rc.5 的 connection 与 webServer 接口。');
   const storage = await createStorageController({ dataDir, controlDir });
@@ -529,6 +536,11 @@ export async function createTravelHost({ ctx, dataDir, controlDir = controlDirec
       if (method === 'GET' && route === '/geo/place-choices') {
         respond(response, 200, { ok: true, provinces: await geo.listPlaceChoices() }); return;
       }
+      if (method === 'GET' && route === '/geo/district-choices') {
+        if (['province', 'city'].some(key => url.searchParams.getAll(key).length !== 1)) throw fail('请选择有效的省份和城市。');
+        const { province, city } = await catalogPlace({ province: url.searchParams.get('province'), city: url.searchParams.get('city') });
+        respond(response, 200, { ok: true, districts: await geo.listDistrictChoices(province, city) }); return;
+      }
       if (method === 'GET' && route.startsWith('/geo/')) {
         const payload = await geo.file(route.slice(5));
         if (!payload) throw fail('地图数据不存在。', 404);
@@ -680,6 +692,31 @@ export async function createTravelHost({ ctx, dataDir, controlDir = controlDirec
         respond(response, 200, { ok: true, records: (Array.isArray(found) ? found : found.results || []).map((item) => visibleCard(item.record || item, resource)) }); return;
       }
       if (method === 'GET' && route === '/map') { respond(response, 200, { ok: true, ...await engine.mapData() }); return; }
+      if (method === 'POST' && route === '/open-original') {
+        const body = await readJsonBody(request);
+        if (Object.keys(body).some(key => !['recordId', 'photoId'].includes(key))) throw fail('原图请求只接受照片编号。');
+        const recordId = textField(body.recordId, 100, '档案编号'), photoId = textField(body.photoId, 100, '照片编号');
+        if (!recordId || !photoId) throw fail('请选择有效的照片。');
+        const media = await engine.getMedia(recordId, photoId);
+        if (!media || media.status !== 'saved' || typeof media.relativePath !== 'string') throw fail('图片不存在。', 404);
+        let safe;
+        try { safe = await controlledFile(dataDir, media.relativePath); }
+        catch (error) {
+          if (!['ENOENT', 'ENOTDIR'].includes(error.code)) throw error;
+          resource.assertStorage(); throw missingOriginal();
+        }
+        if (!IMAGE_TYPES.has(media.metadata?.mime) || !IMAGE_EXTENSIONS.has(extname(safe.absolute).toLowerCase())) throw fail('此文件无法作为照片打开。', 415);
+        await withVerifiedOriginal(safe.absolute, media, resource, async ({ before }) => {
+          // Opening uses the original path, not a downloaded or preview copy.
+          // Recheck the path after hashing, before handing it to the OS.
+          const current = await controlledFile(dataDir, media.relativePath);
+          const info = await stat(current.absolute, { bigint: true });
+          if (current.absolute !== safe.absolute || info.dev !== before.dev || info.ino !== before.ino || info.size !== before.size || info.mtimeNs !== before.mtimeNs || info.ctimeNs !== before.ctimeNs) throw Object.assign(fail('原图已变化，请刷新后重试。', 409), { code: 'TRAVEL_ORIGINAL_CONFLICT' });
+          resource.assertStorage();
+          await openOriginal(safe.absolute, { signal: resource.controller.signal });
+        });
+        respond(response, 200, { ok: true }); return;
+      }
       if (method === 'GET' && route === '/media') {
         const id = url.searchParams.get('id') || '', photoId = url.searchParams.get('photoId');
         let media;
@@ -795,7 +832,12 @@ export async function createTravelHost({ ctx, dataDir, controlDir = controlDirec
         for (const key of ['capturedAt', 'gps', 'place', 'caption', 'tags']) if (Object.hasOwn(body, key)) patch[key] = body[key];
         const result = await engine.editPhoto(textField(body.recordId, 200, '记录 ID'), textField(body.photoId, 200, '照片 ID'), patch);
         const record = result?.media ? result : await engine.getRecord(body.recordId);
-        respond(response, 200, { ok: true, record: visibleRecord(record) }); return;
+        const move = result?.movedFromRecordId ? {
+          movedFromRecordId: result.movedFromRecordId,
+          movedPhotoId: result.movedPhotoId,
+          previousRecord: visibleRecord(await engine.getRecord(result.movedFromRecordId)),
+        } : {};
+        respond(response, 200, { ok: true, record: visibleRecord(record), ...move }); return;
       }
       if (method === 'POST' && route === '/delete-record') {
         const body = await readJsonBody(request);

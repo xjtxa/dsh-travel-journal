@@ -13,6 +13,63 @@ window.__ModuleLoader__.load({
 .tj-archive-toolbar{position:sticky;top:0;z-index:2;display:flow-root;background:var(--tj-bg)}
 html[data-platform=darwin]:not([data-fullscreen]) .tj-archive-toolbar{top:var(--dsh-frame-top-clearance,0px)}
 `;
+    const PHOTO_CSS = `
+.tj{-webkit-user-select:none;user-select:none}
+.tj input,.tj textarea,.tj [contenteditable=true]{-webkit-user-select:text;user-select:text}
+.tj-wrap.tj-detail-wrap{max-width:1500px}
+.tj-photo-grid{position:relative;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:14px;align-items:start;min-width:0;isolation:isolate}
+.tj-photo-item{position:relative;min-width:0;max-width:100%;align-self:start;transition:none}
+.tj-photo-grid-positioned{display:block}.tj-photo-grid-positioned>.tj-photo-item{position:absolute;left:0;top:0}
+.tj-photo-item:hover,.tj-photo-item:focus-within{z-index:2}
+.tj-city-section,.tj-matched-photos,.tj-photo,.tj-photo-body{min-width:0;max-width:100%}
+.tj-photo{display:flex;flex-direction:column;position:relative;width:100%;min-width:0;max-width:100%;margin:0}
+.tj-record,.tj-archive-group,.tj-photo{transition:transform .18s,box-shadow .18s,border-color .18s}
+.tj-record:hover,.tj-archive-group:hover,.tj-photo:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--tj-green) 55%,var(--tj-line));box-shadow:0 14px 34px #00000030,0 4px 12px #0000001f}
+.tj-photo:hover{z-index:1}.tj-photo.details-open{border-color:color-mix(in srgb,var(--tj-green) 45%,var(--tj-line))}
+.tj-photo-preview{flex:none;width:100%;aspect-ratio:var(--tj-photo-ratio,1.33333);overflow:hidden;background:var(--tj-soft)}
+.tj-photo-preview>img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;cursor:zoom-in}
+.tj-photo-preview>img:focus-visible{outline:2px solid var(--tj-green);outline-offset:-3px}
+.tj-photo-details{display:grid;grid-template-rows:0fr;opacity:0;pointer-events:none;transition:grid-template-rows .24s cubic-bezier(.2,.65,.3,1),opacity .18s ease}
+.tj-photo-details.is-open{grid-template-rows:1fr;opacity:1;pointer-events:auto}
+.tj-photo-details-inner{min-height:0;overflow:hidden}
+.tj-photo-body{padding:13px;overflow-wrap:anywhere;border-top:1px solid var(--tj-line)}
+.tj-photo-detail-header{display:flex;align-items:flex-start;justify-content:flex-end;gap:8px;margin-bottom:4px}
+.tj-photo-detail-header>.tj-btn{flex:none}
+.tj-photo-field{display:grid;grid-template-columns:minmax(0,1fr);gap:3px;padding:8px 9px;margin:1px -8px;border:1px solid transparent;border-radius:8px;min-width:0;transition:background-color .15s,border-color .15s}
+.tj-photo-field-label{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:10px;color:var(--tj-muted);line-height:1.5}
+.tj-photo-edit-badge{display:inline-flex;align-items:center;padding:0 5px;border:1px solid color-mix(in srgb,var(--tj-green) 38%,transparent);border-radius:4px;background:color-mix(in srgb,var(--tj-green) 10%,transparent);color:var(--tj-green);font-size:9px;font-weight:500;line-height:1.6;white-space:nowrap}
+.tj-photo-field-value{min-width:0;font-size:12px;line-height:1.65;overflow-wrap:anywhere;white-space:pre-wrap;font-variant-numeric:tabular-nums}
+.tj-photo-field-editable:not(.editing){cursor:text}
+.tj-photo-field-editable:not(.editing):hover{background:var(--tj-soft);border-color:color-mix(in srgb,var(--tj-green) 45%,var(--tj-line))}
+.tj-photo-field-editable:focus-visible{outline:2px solid var(--tj-green);outline-offset:1px;background:var(--tj-soft)}
+.tj-photo-field.editing{background:color-mix(in srgb,var(--tj-green) 7%,var(--tj-card));border-color:color-mix(in srgb,var(--tj-green) 58%,var(--tj-line))}
+.tj-photo-field-editor{display:block;min-width:0;margin:0;font-size:12px;line-height:1.65;font-variant-numeric:tabular-nums}
+.tj-photo-field-editor .tj-photo-inline-value{display:block;box-sizing:border-box;width:100%;min-width:0;max-width:100%;padding:0;margin:0;border:0;border-radius:0;background:transparent;color:var(--tj-ink);font:inherit;line-height:inherit;box-shadow:none;appearance:none;caret-color:var(--tj-green)}
+.tj-photo-field-editor .tj-photo-inline-value:focus,.tj-photo-field-editor .tj-photo-inline-value:focus-visible{outline:none;box-shadow:none;background:transparent}
+.tj-photo-field-editor textarea.tj-photo-inline-value{resize:none;min-height:1.65em;overflow:hidden;white-space:pre-wrap;overflow-wrap:anywhere}
+.tj-photo-field-editor input[type=datetime-local].tj-photo-inline-value{appearance:auto;min-height:1.65em}
+.tj-photo-field-editor input[type=datetime-local]::-webkit-datetime-edit{padding:0;min-width:0}
+.tj-photo-field-editor input[type=datetime-local]::-webkit-calendar-picker-indicator{margin:0 0 0 3px;padding:2px;cursor:pointer}
+.tj-photo-location-inputs{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;min-width:0;max-width:100%}
+.tj-photo-location-inputs>label{display:inline-flex;align-items:baseline;gap:4px;min-width:0;max-width:100%;font:inherit;line-height:inherit}
+.tj-photo-location-inputs>label>span{flex:none;color:var(--tj-muted);font-size:10px}
+.tj-photo-location-inputs .tj-photo-inline-part{display:inline-block;flex:0 1 auto;width:calc(var(--tj-inline-part-width,4em) + 1.4em);min-width:2.5em;max-width:100%}
+.tj-photo-field-editor select.tj-photo-inline-value{appearance:auto;min-height:1.65em;padding-right:2px;border-bottom:1px solid color-mix(in srgb,var(--tj-green) 40%,var(--tj-line));cursor:pointer;white-space:nowrap;text-overflow:ellipsis}
+.tj-photo-field-editor select.tj-photo-inline-value:focus-visible{border-bottom-color:var(--tj-green)}
+.tj-photo-field-editor select.tj-photo-inline-value:disabled{color:var(--tj-muted);opacity:.65;cursor:default}
+.tj-photo-field-editor select.tj-photo-inline-value option{background:var(--tj-card);color:var(--tj-ink)}
+@supports(field-sizing:content){.tj-photo-location-inputs .tj-photo-inline-part{field-sizing:content;width:auto}}
+.tj-photo-edit-hint,.tj-photo-format-hint,.tj-photo-catalog-status,.tj-photo-catalog-error{display:block;max-width:100%;margin-top:5px;font-size:10px;line-height:1.55;overflow-wrap:anywhere;white-space:normal}
+.tj-photo-edit-hint{color:var(--tj-green);font-weight:500}
+.tj-photo-format-hint,.tj-photo-catalog-status{color:var(--tj-muted)}
+.tj-photo-catalog-error{color:#bd5647}
+.tj-photo-detail-actions{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:11px;border-top:1px solid var(--tj-line)}
+.tj-photo-detail-actions .danger{color:#bd5647}
+.tj-photo-body .tj-tags,.tj-photo-body .tj-tag{max-width:100%}
+.tj-photo-body .tj-two{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+@media(prefers-reduced-motion:reduce){.tj-record,.tj-archive-group,.tj-photo,.tj-photo-details,.tj-photo-field{transition:none}.tj-record:hover,.tj-archive-group:hover,.tj-photo:hover{transform:none}}
+@media(max-width:640px){.tj-photo-grid{gap:11px}.tj-photo-body{padding:11px}}
+`;
     function Icon({ name = 'journal', size = 18 } = {}) {
       const paths = {
         journal: 'M5 3h12a2 2 0 0 1 2 2v16H7a3 3 0 0 1-3-3V4a1 1 0 0 1 1-1Zm-1 14h15M8 7h7M8 11h5',
@@ -30,7 +87,6 @@ html[data-platform=darwin]:not([data-fullscreen]) .tj-archive-toolbar{top:var(--
     const placeFailureText = (failures) => Object.entries(failures || {}).map(([kind, count]) => `${PLACE_FAILURE_LABELS[kind] || kind} ${count}`).join('、');
     const noteText = (note) => typeof note === 'string' ? note : note?.text || '';
     const placeText = (place) => typeof place === 'string' ? place : place?.city || place?.name || place?.displayName || place?.display_name || '';
-    const photoPlaceText = (place) => typeof place === 'string' ? place : [...new Set([place?.city, place?.district].filter(Boolean))].join(' · ') || placeText(place);
     const ACTION_CSS = `.tj-inline-title{width:100%;font:inherit!important;font-weight:inherit!important;line-height:inherit!important;padding:0 2px;border:1px solid var(--tj-green);border-radius:4px;background:var(--tj-card);color:var(--tj-ink)}.tj-inline-caption{display:block;width:100%;min-height:4em;resize:vertical;font:inherit;line-height:1.65;color:var(--tj-ink);background:var(--tj-card);border:1px solid var(--tj-green);border-radius:5px;padding:4px 6px}.tj-inline-actions{display:flex;gap:8px;margin-top:10px}.tj-context-menu{position:fixed;z-index:3000;min-width:155px;padding:5px;border:1px solid var(--tj-line);border-radius:9px;background:var(--tj-card);box-shadow:0 8px 30px #0003}.tj-context-menu button{display:block;width:100%;border:0;background:none;color:var(--tj-ink);padding:8px 12px;text-align:left;border-radius:5px;cursor:pointer}.tj-context-menu button:hover,.tj-context-menu button:focus-visible{background:var(--tj-soft)}.tj-context-menu .danger,.tj-delete-dialog .danger{color:#bd5647}.tj-dialog-backdrop{position:fixed;inset:0;z-index:3100;background:#0006;display:grid;place-items:center;padding:24px}.tj-delete-dialog{width:min(420px,100%);padding:24px;border:1px solid var(--tj-line);border-radius:14px;background:var(--tj-card);box-shadow:0 15px 60px #0004}.tj-delete-dialog p{margin:12px 0 18px}.tj-detail-fold{margin-top:12px}.tj-detail-fold .tj-field{margin:12px 0}.tj-photo-edit-actions{margin-top:12px}`;
     function ContextMenu({ menu, close, remove }) {
       const box = useRef(null);
@@ -96,39 +152,32 @@ html[data-platform=darwin]:not([data-fullscreen]) .tj-archive-toolbar{top:var(--
       return `${days ? `已按 ${days} 天归档` : '已保存待补日期的档案'}，共 ${photos} 张照片。${days && undated ? '另有日期待补充的照片。' : ''}正在后台整理。`;
     }
     function capturedText(media) { const value = media.metadata?.capturedAt; return typeof value === 'object' && value ? value.value || value.raw || JSON.stringify(value) : value || '未检测到'; }
-    function gpsOf(media) { return media.metadata?.gps; }
-    function Metadata({ media }) {
-      const metadata = media.metadata || {}, gps = gpsOf(media);
-      return h('div', { className: 'tj-meta' },
-        h('span', null, '拍摄时间'), h('span', null, capturedText(media), Object.hasOwn(media.userEdits || {}, 'capturedAt') ? '（已更正）' : ''),
-        h('span', null, '拍摄位置'), h('span', null, gps ? `${Number(gps.latitude).toFixed(5)}, ${Number(gps.longitude).toFixed(5)}` : '未检测到 GPS'),
-        h('span', null, '原图尺寸'), h('span', null, `${metadata.width || '—'} × ${metadata.height || '—'} · ${metadata.bytes ? (metadata.bytes / 1048576).toFixed(2) + ' MB' : '大小未知'}`),
-        h('span', null, '文件校验'), h('span', { className: 'tj-hash', title: metadata.sha256 || '' }, metadata.sha256 ? metadata.sha256.slice(0, 20) + '…' : '—'));
-    }
     function RecordCard({ record, open, api, updated, onMenu, onCover, notify = () => {} }) {
       const [editing, setEditing] = useState(false), [title, setTitle] = useState(record.title || ''), [busy, setBusy] = useState(false), [error, setError] = useState('');
-      const flight = useRef(false), editingSession = useRef(false), titleBaseline = useRef(record.title || '');
+      const flight = useRef(false), editingSession = useRef(false), titleBaseline = useRef(record.title || ''), composing = useRef(false), skipActivation = useRef(false);
       useEffect(() => { if (!editing) setTitle(record.title || ''); }, [record.title, editing]);
-      function edit() { editingSession.current = true; titleBaseline.current = record.title || ''; setTitle(record.title || ''); setEditing(true); setError(''); }
+      function edit() { editingSession.current = true; composing.current = false; skipActivation.current = false; titleBaseline.current = record.title || ''; setTitle(record.title || ''); setEditing(true); setError(''); }
+      function cancelTitle() { if (!flight.current) { skipActivation.current = true; editingSession.current = false; composing.current = false; setTitle(record.title || ''); setEditing(false); setError(''); } }
       async function save() {
-        if (flight.current || !editingSession.current) return;
+        if (flight.current || !editingSession.current || composing.current) return;
         if (title.trim() === titleBaseline.current) { editingSession.current = false; setEditing(false); setError(''); return; }
         flight.current = true; setBusy(true); setError('');
         try { const result = await api('/edit-record', { body: { id: record.id, title: title.trim() } }); updated(result.record, { recordId: record.id }); editingSession.current = false; setEditing(false); notify('整日标题已更新。'); }
         catch (problem) { setError(problem.message); } finally { flight.current = false; setBusy(false); }
       }
-      function activate() { if (!editing) return open(record.id, record.matchedPhotoIds || []); }
+      function activate() { if (skipActivation.current) { skipActivation.current = false; return; } if (!editingSession.current && !editing) return open(record.id, record.matchedPhotoIds || []); }
       const cover = record.media?.find((media) => media.previewUrl);
       const places = Array.from(new Set((record.cityGroups?.length ? record.cityGroups : recordCityGroups(record)).filter((group) => group.key !== 'unknown' && group.key !== 'pending-place' && group.name && group.name !== '地点待补充').map((group) => group.name)));
       const cityLine = places.length ? places.join('　') : '地点待补充';
       function showMenu(event) { onMenu?.(event, { kind: 'record', record, edit, cover: onCover && (record.photoCount ?? record.media?.length ?? 0) > 0 ? () => onCover(record) : undefined }); }
-      return h('article', { className: 'tj-record', role: 'button', tabIndex: 0, onClick: activate, onKeyDown: (event) => {
+      return h('article', { className: 'tj-record', role: 'button', tabIndex: 0, onClick: activate, onPointerDownCapture: event => { skipActivation.current = editingSession.current && !event.target?.closest?.('input,textarea'); }, onKeyDown: (event) => {
         if (event.target !== event.currentTarget) return;
         if (event.key === 'ContextMenu' || event.key === 'F10' && event.shiftKey) showMenu(event);
-        if (['Enter', ' '].includes(event.key)) { event.preventDefault(); activate(); }
+        if (['Enter', ' '].includes(event.key)) { event.preventDefault(); skipActivation.current = false; activate(); }
       }, onContextMenu: showMenu },
         h('div', { className: 'tj-cover' }, cover ? h('img', { src: cover.previewUrl, alt: record.title || '旅行照片', loading: 'lazy', decoding: 'async' }) : h(Icon, { name: 'photo', size: 40 })),
-        h('div', { className: 'tj-record-body' }, h('div', { className: 'tj-date' }, dateText(record.date)), h('h3', null, editing ? h('input', { className: 'tj-inline-title', 'aria-label': '整日标题', autoFocus: true, value: title, maxLength: 100, disabled: busy, onClick: (event) => event.stopPropagation(), onChange: (event) => setTitle(event.target.value), onKeyDown: (event) => { event.stopPropagation(); if (event.key === 'Enter') { event.preventDefault(); save(); } if (event.key === 'Escape' && !busy) { editingSession.current = false; setEditing(false); setError(''); } }, onBlur: () => { if (!flight.current) save(); } }) : record.title || '一段旅行记忆'),
+        h('div', { className: 'tj-record-body' }, h('div', { className: 'tj-date' }, dateText(record.date)), h('h3', null, editing ? h('input', { className: 'tj-inline-title', 'aria-label': '整日标题', autoFocus: true, value: title, maxLength: 100, readOnly: busy, onClick: (event) => event.stopPropagation(), onChange: (event) => setTitle(event.target.value), onCompositionStart: () => { composing.current = true; }, onCompositionEnd: () => { composing.current = false; }, onKeyDown: (event) => { event.stopPropagation(); if (event.isComposing || event.nativeEvent?.isComposing || event.keyCode === 229 || event.nativeEvent?.keyCode === 229 || composing.current) return; if (event.key === 'Enter') { event.preventDefault(); return save(); } if (event.key === 'Escape' && !busy) { event.preventDefault?.(); cancelTitle(); } }, onBlur: cancelTitle }) : record.title || '一段旅行记忆'),
+          editing ? h('div', { className: 'tj-photo-edit-hint' }, h('span', { className: 'tj-photo-edit-badge' }, '编辑中'), 'Enter 保存 · 点击空白取消') : null,
           error ? h('div', { className: 'tj-hint', role: 'alert', style: { color: '#bd5647' } }, error) : null,
           h('div', { className: 'tj-record-cities', title: cityLine }, cityLine),
           h('div', { className: 'tj-excerpt' }, record.summary || (record.notes || []).map(noteText).join(' ') || '照片已保存，正在整理这一天的记忆。'),
@@ -443,53 +492,296 @@ html[data-platform=darwin]:not([data-fullscreen]) .tj-archive-toolbar{top:var(--
               placeError ? h('div', { className: 'tj-hint', role: 'alert' }, '省市列表读取失败：', placeError, h('button', { className: 'tj-btn link', type: 'button', disabled: placeLoading, onClick: loadPlaces }, '重新读取')) : null),
             h('div', { className: 'tj-upload-footer' }, h('span', { className: 'tj-hint' }, '大批照片会分段处理，额外等待队列最多 2000 张。'), h('button', { className: 'tj-btn primary', type: 'submit', disabled: busy || !hasSelection }, busy ? h('span', { className: 'tj-spinner' }) : h(Icon, { name: 'plus', size: 16 }), busy ? '正在接收照片…' : resumeTarget ? '校验并继续上传' : '按日期归档'))))));
     }
-    function Photo({ media, recordId, api, updated, notify, download, onMenu }) {
-      const [editing, setEditing] = useState(false), [draft, setDraft] = useState({}), [busy, setBusy] = useState(false), [error, setError] = useState(''), [details, setDetails] = useState(false);
-      const flight = useRef(false), baseline = useRef(null);
-      const rawPlace = media.place || media.analysis?.place, place = typeof rawPlace === 'string' ? rawPlace : rawPlace?.city || '', district = typeof rawPlace === 'object' ? rawPlace?.district || '' : '';
-      const caption = media.caption ?? media.analysis?.caption ?? '', tags = media.tags || media.analysis?.tags || [];
-      function edit() { const gps = gpsOf(media), values = { capturedAt: capturedText(media) === '未检测到' ? '' : capturedText(media), latitude: gps?.latitude ?? '', longitude: gps?.longitude ?? '', place, district, caption, tags: tags.join('，') }; baseline.current = { ...values, tags: [...tags], gps: gps ? { ...gps } : null }; setDraft(values); setEditing(true); setError(''); }
-      const set = (key, value) => setDraft((before) => ({ ...before, [key]: value }));
-      async function save(event) {
-        event?.preventDefault(); if (flight.current) return; flight.current = true; setBusy(true); setError('');
-        try {
-          let gps = null;
-          if (String(draft.latitude).trim() || String(draft.longitude).trim()) {
-            if (!String(draft.latitude).trim() || !String(draft.longitude).trim()) throw new Error('请同时填写纬度和经度。');
-            gps = { latitude: Number(draft.latitude), longitude: Number(draft.longitude) };
-            if (!Number.isFinite(gps.latitude) || !Number.isFinite(gps.longitude) || Math.abs(gps.latitude) > 90 || Math.abs(gps.longitude) > 180) throw new Error('经纬度超出有效范围。');
-          }
-          const cityValue = draft.place.trim(), districtValue = draft.district.trim(), patch = { recordId, photoId: media.id };
-          const capturedAt = draft.capturedAt.trim() || null, oldCapturedAt = baseline.current.capturedAt || null;
-          if (capturedAt !== oldCapturedAt) patch.capturedAt = capturedAt;
-          const originalGPS = baseline.current.gps;
-          if ((gps?.latitude ?? null) !== (originalGPS?.latitude ?? null) || (gps?.longitude ?? null) !== (originalGPS?.longitude ?? null)) patch.gps = gps;
-          if (cityValue !== baseline.current.place || districtValue !== baseline.current.district) {
-            const city = cityValue !== baseline.current.place ? cityValue : place, county = districtValue !== baseline.current.district ? districtValue : district;
-            patch.place = city || county ? { country: rawPlace?.country || '', province: rawPlace?.province || '', city, district: county, name: [city, county].filter(Boolean).join(' · ') } : null;
-          }
-          if (draft.caption.trim() !== baseline.current.caption) patch.caption = draft.caption.trim();
-          const nextTags = draft.tags.split(/[,，]/).map((tag) => tag.trim()).filter(Boolean);
-          if (JSON.stringify(nextTags) !== JSON.stringify(baseline.current.tags)) patch.tags = nextTags;
-          if (Object.keys(patch).length === 2) { setEditing(false); return; }
-          const result = await api('/edit-photo', { body: patch });
-          updated(result.record, { recordId }); setEditing(false); notify('照片信息已更正，原文件保持完整。');
-        } catch (problem) { setError(problem.message); } finally { flight.current = false; setBusy(false); }
-      }
-      function field(key, label, placeholder = '') { return h('label', { className: 'tj-field' }, h('span', null, label), h('input', { className: 'tj-input', value: draft[key] ?? '', placeholder, onChange: (event) => set(key, event.target.value), maxLength: 200, disabled: busy })); }
-      return h('figure', { className: 'tj-photo', onContextMenu: (event) => onMenu?.(event, { kind: 'photo', recordId, media, edit }) }, media.previewUrl ? h('img', { src: media.previewUrl, alt: caption || media.name || '旅行照片', loading: 'lazy' }) : h('div', { className: 'tj-notice error' }, media.error || '照片尚未保存'),
-        h('figcaption', { className: 'tj-photo-body' }, h('p', { className: 'tj-photo-title' }, photoPlaceText(rawPlace) || media.name || '旅行照片'),
-          editing ? h('textarea', { className: 'tj-inline-caption', 'aria-label': '照片说明', value: draft.caption, maxLength: 400, disabled: busy, autoFocus: true, onChange: (event) => set('caption', event.target.value) }) : caption ? h('p', { className: 'tj-muted' }, caption) : null,
-          editing ? h('input', { className: 'tj-input', 'aria-label': '照片标签', value: draft.tags, maxLength: 1000, disabled: busy, placeholder: '标签，以逗号分隔', style: { margin: '9px 0' }, onChange: (event) => set('tags', event.target.value) }) : h('div', { className: 'tj-tags' }, ...tags.map((tag, i) => h('span', { className: 'tj-tag', key: i }, tag))),
-          h('div', { className: 'tj-row tj-between', style: { marginTop: 12 } }, h('button', { className: 'tj-btn small', type: 'button', 'aria-expanded': details, onClick: () => setDetails(!details) }, details ? '收起详细信息' : '详细信息'), media.originalUrl ? h('button', { className: 'tj-btn link', type: 'button', onClick: () => download(media.originalUrl, media.downloadName || media.name || 'photo') }, '下载原图') : null),
-          details ? h('div', { className: 'tj-detail-fold' }, h(Metadata, { media }), editing ? h(React.Fragment, null, field('capturedAt', '拍摄时间', '2026-10-30 15:20:00'), h('div', { className: 'tj-two' }, field('place', '城市', '例如：赣州市'), field('district', '区 / 县', '例如：信丰县')), h('div', { className: 'tj-two' }, field('latitude', '纬度', '25.69'), field('longitude', '经度', '100.16')), h('p', { className: 'tj-hint' }, '更正值单独保存，不改写原图 EXIF。城市用于归组，区县用于照片地点展示。')) : null) : null,
-          error ? h('div', { className: 'tj-notice error', role: 'alert' }, error) : null,
-          editing ? h('form', { className: 'tj-photo-edit-actions', onSubmit: save }, h('div', { className: 'tj-row' }, h('button', { className: 'tj-btn primary small', disabled: busy, type: 'submit' }, busy ? '保存中…' : '保存更正'), h('button', { className: 'tj-btn small', disabled: busy, type: 'button', onClick: () => { setEditing(false); setError(''); } }, '取消编辑'))) : null));
+    function photoAspect(media, loaded) {
+      const metadata = media.metadata || {}, sideways = Number(metadata.orientation) >= 5;
+      const width = loaded?.width || Number(sideways ? metadata.height : metadata.width), height = loaded?.height || Number(sideways ? metadata.width : metadata.height);
+      const ratio = width > 0 && height > 0 ? width / height : 4 / 3;
+      return Math.max(ratio * 0.92, Math.min(Math.max(0.8, Math.min(1.5, ratio)), ratio / 0.92));
     }
-    function RecordDetail({ record, matchedPhotoIds = [], api, back, updated, notify, download, refresh, onMenu }) {
+    function photoTimeInput(value) {
+      if (!value) return '';
+      const match = String(value).match(/^(\d{4})[:-](\d{2})[:-](\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2})(?:\.\d+)?)?(?:Z|[+-]\d{2}:?\d{2})?)?$/);
+      if (!match) return null;
+      const [year, month, day, hour, minute, second] = match.slice(1).map(part => Number(part || 0));
+      const date = new Date(0); date.setUTCFullYear(year, month - 1, day); date.setUTCHours(hour, minute, second, 0);
+      if (year < 1 || date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day || date.getUTCHours() !== hour || date.getUTCMinutes() !== minute || date.getUTCSeconds() !== second) return null;
+      return `${match[1]}-${match[2]}-${match[3]}T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(second).padStart(2, '0')}`;
+    }
+    let photoPanelSequence = 0;
+    function Photo({ media, recordId, api, updated, notify, download, onDelete }) {
+      const [details, setDetails] = useState(false), [seenDetails, setSeenDetails] = useState(false), [editing, setEditing] = useState(null), [draft, setDraft] = useState({}), [busy, setBusy] = useState(false), [error, setError] = useState(''), [loadedShape, setLoadedShape] = useState(null);
+      const [placeCatalog, setPlaceCatalog] = useState(null), [districts, setDistricts] = useState([]), [placeLoading, setPlaceLoading] = useState(false), [districtLoading, setDistrictLoading] = useState(false), [placeError, setPlaceError] = useState('');
+      const flight = useRef(false), baseline = useRef(null), originalFlight = useRef(false), preview = useRef(null), panelId = useRef(null), composing = useRef(false);
+      const placeSession = useRef(0), districtRequest = useRef(0), catalogCache = useRef(null), districtCache = useRef(new Map()), editorBox = useRef(null);
+      useEffect(() => () => { placeSession.current++; districtRequest.current++; }, []);
+      useEffect(() => {
+        if (!editing || typeof document === 'undefined' || !editorBox.current) return;
+        const box = editorBox.current;
+        if (document.activeElement === box || !box.contains(document.activeElement)) (box.querySelector('input:not([readonly]),textarea:not([readonly]),select:not(:disabled)') || box).focus?.({ preventScroll: true });
+        const outside = event => { if (!box.contains(event.target)) cancelEdit(); };
+        document.addEventListener('pointerdown', outside, true);
+        return () => document.removeEventListener('pointerdown', outside, true);
+      }, [editing, placeLoading, districtLoading]);
+      if (!panelId.current) panelId.current = `tj-photo-details-${++photoPanelSequence}`;
+      const rawPlace = Object.hasOwn(media.userEdits || {}, 'place') ? media.place : media.place || media.analysis?.place;
+      const province = rawPlace?.province || '', city = typeof rawPlace === 'string' ? rawPlace : rawPlace?.city || '', district = typeof rawPlace === 'object' ? rawPlace?.district || '' : '';
+      const address = [...new Set([province, city, district].filter(Boolean))].join('');
+      const caption = media.caption ?? media.analysis?.caption ?? '', tags = media.tags || media.analysis?.tags || [];
+      const rawTime = capturedText(media), inputTime = photoTimeInput(rawTime === '未检测到' ? '' : rawTime);
+      const displayTime = inputTime ? (/\d{2}:\d{2}/.test(rawTime) ? inputTime.replace('T', ' ') : inputTime.slice(0, 10)) : rawTime;
+      const ratio = photoAspect(media, loadedShape?.src === media.previewUrl ? loadedShape : null);
+      function toggleDetails(event) {
+        if (event?.target?.closest?.('input,textarea')) return;
+        event?.preventDefault?.(); event?.stopPropagation?.();
+        if (details) preview.current?.focus?.({ preventScroll: true });
+        else setSeenDetails(true);
+        setDetails(!details);
+      }
+      function editField(key, event) {
+        if (flight.current || editing) return;
+        event?.preventDefault?.(); event?.stopPropagation?.();
+        const values = { capturedAt: inputTime || '', province, city, district, caption, tags: tags.join('，') };
+        baseline.current = { ...values, tags: [...tags] };
+        setDraft(values); setEditing(key); setError('');
+        const session = ++placeSession.current;
+        if (key === 'place') void loadPlaces(session, province, city);
+      }
+      const set = (key, value) => setDraft(before => ({ ...before, [key]: value }));
+      function endEdit() { composing.current = false; placeSession.current++; districtRequest.current++; setEditing(null); setError(''); }
+      function cancelEdit() { if (!flight.current) endEdit(); }
+      async function loadDistricts(catalog, selectedProvince, selectedCity, session) {
+        const request = ++districtRequest.current;
+        setDistricts([]); setDistrictLoading(false); setPlaceError('');
+        if (!catalog.some(entry => entry.name === selectedProvince && entry.cities.includes(selectedCity))) return;
+        setDistrictLoading(true);
+        try {
+          const key = JSON.stringify([selectedProvince, selectedCity]);
+          let names = districtCache.current.get(key);
+          if (!names) {
+            const result = await api('/geo/district-choices?' + new URLSearchParams({ province: selectedProvince, city: selectedCity }));
+            if (!Array.isArray(result.districts) || result.districts.some(name => typeof name !== 'string')) throw new Error('区县列表格式不正确。');
+            names = [...new Set(result.districts)]; districtCache.current.set(key, names);
+          }
+          if (session === placeSession.current && request === districtRequest.current) { setDistricts(names); setError(''); }
+        } catch (problem) {
+          const message = problem.message === '地图数据不存在。'
+            ? '区县选择接口尚未加载，请完全退出并重新打开 DSH。'
+            : problem.message || '区县列表读取失败。';
+          if (session === placeSession.current && request === districtRequest.current) setPlaceError(message);
+        } finally { if (session === placeSession.current && request === districtRequest.current) setDistrictLoading(false); }
+      }
+      async function loadPlaces(session, selectedProvince, selectedCity) {
+        setPlaceLoading(true); setPlaceError('');
+        try {
+          let catalog = catalogCache.current;
+          if (!catalog) {
+            const result = await api('/geo/place-choices');
+            if (!Array.isArray(result.provinces) || !result.provinces.length || result.provinces.some(entry => typeof entry.name !== 'string' || !Array.isArray(entry.cities) || entry.cities.some(name => typeof name !== 'string'))) throw new Error('省市列表格式不正确。');
+            catalog = result.provinces; catalogCache.current = catalog;
+          }
+          if (session !== placeSession.current) return;
+          setPlaceCatalog(catalog); setPlaceLoading(false);
+          await loadDistricts(catalog, selectedProvince, selectedCity, session);
+        } catch (problem) { if (session === placeSession.current) setPlaceError(problem.message || '省市列表读取失败。'); }
+        finally { if (session === placeSession.current) setPlaceLoading(false); }
+      }
+      function changePlace(part, value) {
+        setError(''); setPlaceError('');
+        if (part === 'province') {
+          districtRequest.current++; setDistricts([]); setDistrictLoading(false);
+          setDraft(before => ({ ...before, province: value, city: '', district: '' }));
+        } else if (part === 'city') {
+          setDraft(before => ({ ...before, city: value, district: '' }));
+          void loadDistricts(catalogCache.current || [], draft.province, value, placeSession.current);
+        } else set('district', value);
+      }
+      async function save(event) {
+        event?.preventDefault?.(); event?.stopPropagation?.();
+        if (flight.current || !editing || composing.current) return;
+        flight.current = true; setBusy(true); setError('');
+        try {
+          const patch = { recordId, photoId: media.id }, before = baseline.current;
+          if (editing === 'capturedAt') {
+            const control = editorBox.current?.querySelector?.('input[type="datetime-local"]');
+            if (control?.validity && !control.validity.valid) throw new Error('请填写完整且有效的日期时间，精确到秒。');
+            const value = photoTimeInput(draft.capturedAt.trim());
+            if (value === null) throw new Error('请选择有效的日期和时间，精确到秒。');
+            if (value !== before.capturedAt) patch.capturedAt = value ? value.replace('T', ' ') : null;
+          } else if (editing === 'place') {
+            const value = { province: draft.province.trim(), city: draft.city.trim(), district: draft.district.trim() };
+            if (['province', 'city', 'district'].some(key => value[key] !== before[key])) {
+              if (!Object.values(value).some(Boolean)) patch.place = null;
+              else {
+                if (placeLoading || districtLoading) throw new Error('地点列表正在读取，请稍候。');
+                if (placeError) throw new Error('地点列表未加载成功，请先重试。');
+                if (!placeCatalog?.some(entry => entry.name === value.province && entry.cities.includes(value.city))) throw new Error('请从列表中选择省份和城市。');
+                const preservedDistrict = value.province === before.province && value.city === before.city && value.district === before.district;
+                if (value.district && !districts.includes(value.district) && !preservedDistrict) throw new Error('请从当前城市的区县列表中选择。');
+                patch.place = { country: '中国', ...value, name: [...new Set(Object.values(value).filter(Boolean))].join('') };
+              }
+            }
+          } else if (editing === 'caption') {
+            const value = draft.caption.trim();
+            if (value.length > 400) throw new Error('简介最多 400 字。');
+            if (value !== before.caption.trim()) patch.caption = value;
+          } else if (editing === 'tags') {
+            const value = [...new Set(draft.tags.split(/[,，、;；\n]/).map(tag => tag.trim()).filter(Boolean))];
+            if (value.length > 20) throw new Error('最多填写 20 个标签。');
+            if (value.some(tag => [...tag].length > 40)) throw new Error('每个标签最多 40 字。');
+            if (JSON.stringify(value) !== JSON.stringify(before.tags)) patch.tags = value;
+          }
+          if (Object.keys(patch).length === 2) { endEdit(); return; }
+          const result = await api('/edit-photo', { body: patch });
+          updated(result.record, { recordId, movedFromRecordId: result.movedFromRecordId, movedPhotoId: result.movedPhotoId, previousRecord: result.previousRecord });
+          endEdit();
+          notify(result.movedFromRecordId ? `照片已归入${result.record?.date ? dateText(result.record.date) : '日期待补充'}。` : '照片信息已更正，原文件保持完整。');
+        } catch (problem) { setError(problem.message); }
+        finally { flight.current = false; setBusy(false); }
+      }
+      function input(key, label, options = {}) {
+        return h('input', { className: 'tj-photo-inline-value', 'aria-label': label, value: draft[key] ?? '', maxLength: 200, readOnly: busy, onChange: event => set(key, event.target.value), ...options });
+      }
+      function fitText(node) { if (node) { node.style.height = '0px'; node.style.height = node.scrollHeight + 'px'; } }
+      function editor(key, label) {
+        const control = key === 'caption'
+          ? h('textarea', { ref: fitText, rows: 1, className: 'tj-photo-inline-value', 'aria-label': '照片说明', value: draft.caption, maxLength: 400, readOnly: busy, autoFocus: true, onChange: event => { set('caption', event.target.value); fitText(event.currentTarget); } })
+          : key === 'place' ? h('div', { className: 'tj-photo-location-inputs' }, ...[['province', '省份'], ['city', '城市'], ['district', '区 / 县']].map(([part, partLabel], index) => {
+            const selectedProvince = placeCatalog?.find(entry => entry.name === draft.province);
+            const names = part === 'province' ? (placeCatalog || []).map(entry => entry.name) : part === 'city' ? selectedProvince?.cities || [] : districts;
+            const preserve = baseline.current && (part === 'province' || draft.province === baseline.current.province && (part === 'city' || draft.city === baseline.current.city));
+            const values = [...new Set([...names, ...(preserve && baseline.current[part] ? [baseline.current[part]] : [])])];
+            const value = draft[part] || '', width = [...(value || partLabel.replaceAll(' ', ''))].reduce((total, char) => total + (/[^\u0000-\u00ff]/.test(char) ? 2 : 1), 0) + .25;
+            const disabled = busy || placeLoading || !placeCatalog || part === 'city' && !selectedProvince || part === 'district' && (districtLoading || !draft.city || !values.length);
+            return h('select', { key: part, className: 'tj-photo-inline-value tj-photo-inline-part', 'aria-label': partLabel, value, disabled, autoFocus: index === 0, onChange: event => changePlace(part, event.target.value), style: { '--tj-inline-part-width': `${width}ch` } }, h('option', { value: '' }, part === 'district' ? '区县（可选）' : `选择${partLabel}`), ...values.map(name => h('option', { key: name, value: name }, name)));
+          }))
+          : key === 'capturedAt' ? input(key, label, { type: 'datetime-local', step: 1, autoFocus: true })
+          : input(key, key === 'tags' ? '照片标签' : label, { autoFocus: true, maxLength: key === 'tags' ? 1000 : 200, placeholder: key === 'tags' ? '标签，以逗号分隔' : undefined });
+        return h('form', { ref: editorBox, tabIndex: -1, className: 'tj-photo-field-editor', 'aria-busy': busy, onSubmit: save,
+          onCompositionStart: () => { composing.current = true; }, onCompositionEnd: () => { composing.current = false; },
+          onBlur: event => { if (!event.currentTarget?.contains?.(event.relatedTarget)) cancelEdit(); },
+          onKeyDown: event => {
+            if (event.isComposing || event.nativeEvent?.isComposing || event.keyCode === 229 || event.nativeEvent?.keyCode === 229 || composing.current) return;
+            if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation?.(); cancelEdit(); }
+            else if (event.key === 'Enter' && event.target?.tagName !== 'BUTTON') return save(event);
+          }
+        }, control,
+          h('div', { className: 'tj-photo-edit-hint' }, 'Enter 保存 · 点击空白取消'),
+          h('div', { className: 'tj-photo-format-hint' }, key === 'capturedAt' ? (inputTime === null ? '原拍摄时间格式无法识别，请重新选择' : '按年月日、时分秒填写') : key === 'place' ? '按省、市、区县依次选择' : key === 'tags' ? '最多 20 个标签，用逗号或顿号分隔' : '简介最多 400 字'),
+          key === 'place' && (placeLoading || districtLoading) ? h('div', { className: 'tj-photo-catalog-status', role: 'status' }, '正在读取本地地点列表…') : null,
+          key === 'place' && placeError ? h('div', { className: 'tj-photo-catalog-error', role: 'alert' }, placeError, h('button', { className: 'tj-btn link', type: 'button', onClick: () => loadPlaces(placeSession.current, draft.province, draft.city) }, '重试')) : null,
+          error ? h('div', { className: 'tj-notice error', role: 'alert' }, error) : null);
+      }
+      function row(key, label, value) {
+        const active = editing === key;
+        return h('div', { key, className: 'tj-photo-field tj-photo-field-editable' + (active ? ' editing' : ''), 'data-field': key,
+          role: active ? undefined : 'button', tabIndex: active ? undefined : 0, 'aria-label': active ? undefined : `编辑${label}`,
+          title: active ? undefined : '双击编辑；也可按 Enter 或 F2', onDoubleClick: event => editField(key, event),
+          onKeyDown: event => { if (event.target === event.currentTarget && ['Enter', 'F2'].includes(event.key)) editField(key, event); } },
+          h('div', { className: 'tj-photo-field-label' }, label, active ? h('span', { className: 'tj-photo-edit-badge' }, '编辑中') : null), active ? editor(key, label) : h('div', { className: 'tj-photo-field-value' }, value));
+      }
+      async function openOriginal(event) {
+        event?.stopPropagation?.();
+        if ((event?.button !== undefined && event.button !== 0) || event?.detail > 1 || !media.originalUrl || originalFlight.current) return;
+        originalFlight.current = true;
+        try { await api('/open-original', { body: { recordId, photoId: media.id } }); }
+        catch (problem) { notify(problem.message || '原图暂时无法打开，请检查资料文件夹和默认图片应用。'); }
+        finally { originalFlight.current = false; }
+      }
+      function remove() { if (!flight.current) { try { onDelete?.({ kind: 'photo', recordId, media }); } catch (problem) { notify(problem.message); } } }
+      return h('figure', { className: 'tj-photo' + (details ? ' details-open' : ''), style: { '--tj-photo-ratio': ratio }, onContextMenu: toggleDetails },
+        media.previewUrl ? h('div', { className: 'tj-photo-preview', style: { '--tj-photo-ratio': ratio } }, h('img', {
+          ref: preview, src: media.previewUrl, alt: media.name || '旅行照片', loading: 'lazy', decoding: 'async', role: 'button', tabIndex: 0,
+          'aria-label': `打开${media.name || '照片'}原图；右键展开详细信息`, 'aria-expanded': details, 'aria-controls': panelId.current,
+          title: '左键打开原图，右键展开详细信息', onClick: openOriginal, onKeyDown: event => {
+            if (event.key === 'ContextMenu' || event.key === 'F10' && event.shiftKey) toggleDetails(event);
+            else if (['Enter', ' '].includes(event.key)) { event.preventDefault(); return openOriginal(event); }
+          }, onLoad: event => { const image = event.currentTarget; if (image.naturalWidth > 0 && image.naturalHeight > 0) setLoadedShape({ src: media.previewUrl, width: image.naturalWidth, height: image.naturalHeight }); }
+        })) : h('div', { className: 'tj-notice error' }, media.error || '照片尚未保存'),
+        h('figcaption', { id: panelId.current, className: 'tj-photo-details' + (details ? ' is-open' : ''), 'aria-hidden': !details, inert: details ? undefined : '' }, h('div', { className: 'tj-photo-details-inner' }, seenDetails ? h('div', { className: 'tj-photo-body' },
+          h('div', { className: 'tj-photo-detail-header' }, h('button', { className: 'tj-btn small', type: 'button', onClick: toggleDetails, 'aria-label': '收起照片详细信息' }, '收起')),
+          row('capturedAt', '拍摄时间', displayTime + (Object.hasOwn(media.userEdits || {}, 'capturedAt') ? '（已更正）' : '')),
+          row('place', '地点', address || '地点待补充'),
+          row('caption', '简介', caption || '暂无简介'),
+          row('tags', '标签', tags.length ? h('div', { className: 'tj-tags' }, ...tags.map((tag, index) => h('span', { className: 'tj-tag', key: index }, tag))) : '暂无标签'),
+          h('div', { className: 'tj-photo-detail-actions' }, media.originalUrl ? h('button', { className: 'tj-btn link', type: 'button', onClick: () => download(media.originalUrl, media.downloadName || media.name || 'photo') }, '下载原图') : null, onDelete ? h('button', { className: 'tj-btn link danger', type: 'button', disabled: busy, onClick: remove }, '删除照片') : null)
+        ) : null)));
+    }
+
+    function PhotoGallery({ children = [] }) {
+      const box = useRef(null);
+      const entries = (Array.isArray(children) ? children : [children]).flat(Infinity).filter(Boolean).map((child, index) => ({ child, id: String(child.props?.media?.id || child.key || index) }));
+      const signature = JSON.stringify(entries.map(entry => entry.id));
+      (React.useLayoutEffect || useEffect)(() => {
+        const gallery = box.current;
+        // Older embedded browsers retain a normal grid rather than risking
+        // overlapping cards when detail height cannot be observed reliably.
+        if (!gallery || typeof ResizeObserver !== 'function') return;
+        const items = Array.from(gallery.children).filter(item => item.classList.contains('tj-photo-item'));
+        let disposed = false, frame = null, columns = 0, assignments = new Map(), positions = new Map();
+        const round = value => Math.round(value * 100) / 100;
+        const requestFrame = typeof requestAnimationFrame === 'function' ? requestAnimationFrame : callback => setTimeout(callback, 16);
+        const cancelFrame = typeof cancelAnimationFrame === 'function' ? cancelAnimationFrame : clearTimeout;
+        function layout() {
+          frame = null;
+          if (disposed || !gallery.isConnected) return;
+          const width = gallery.clientWidth;
+          if (!(width > 0) || !items.length) return;
+          const gap = parseFloat(getComputedStyle(gallery).columnGap) || 14;
+          const nextColumns = Math.max(1, Math.min(items.length, Math.floor((width + gap) / (220 + gap))));
+          const columnWidth = round(Math.min(320, (width - gap * (nextColumns - 1)) / nextColumns));
+          // Write all widths before reading heights, avoiding per-card forced
+          // layout. Stable wrappers keep editors mounted across every resize.
+          for (const item of items) {
+            const value = columnWidth + 'px';
+            if (item.style.width !== value) item.style.width = value;
+          }
+          if (!gallery.classList.contains('tj-photo-grid-positioned')) gallery.classList.add('tj-photo-grid-positioned');
+          if (nextColumns !== columns) {
+            columns = nextColumns; assignments = new Map();
+            const estimates = Array(columns).fill(0);
+            for (const item of items) {
+              const figure = item.firstElementChild;
+              const ratio = Math.max(0.01, parseFloat(figure?.style.getPropertyValue('--tj-photo-ratio')) || 4 / 3);
+              const column = estimates.indexOf(Math.min(...estimates));
+              assignments.set(item.getAttribute('data-photo-id'), column);
+              estimates[column] += columnWidth / ratio + gap;
+            }
+          }
+          const measuredHeights = items.map(item => item.getBoundingClientRect().height);
+          const bottoms = Array(columns).fill(0), nextPositions = new Map();
+          for (let index = 0; index < items.length; index++) {
+            const item = items[index];
+            const id = item.getAttribute('data-photo-id'), column = assignments.get(id) ?? 0;
+            const x = round(column * (columnWidth + gap)), y = round(bottoms[column]);
+            const height = measuredHeights[index];
+            const old = positions.get(id), changed = !old || old.x !== x || old.y !== y || old.width !== columnWidth;
+            if (changed) {
+              // Intrinsic panel expansion already animates its height. Apply
+              // same-column Y updates immediately so following cards never
+              // trail a growing panel behind a second transform transition.
+              item.style.transform = `translate3d(${x}px,${y}px,0)`;
+            }
+            nextPositions.set(id, { x, y, width: columnWidth });
+            bottoms[column] = y + height + gap;
+          }
+          positions = nextPositions;
+          const height = round(Math.max(0, ...bottoms) - gap) + 'px';
+          if (gallery.style.height !== height) gallery.style.height = height;
+        }
+        function schedule() { if (!disposed && frame === null) frame = requestFrame(layout); }
+        const observer = new ResizeObserver(schedule);
+        observer.observe(gallery);
+        for (const item of items) observer.observe(item.firstElementChild || item);
+        gallery.addEventListener('load', schedule, true);
+        layout();
+        return () => { disposed = true; observer.disconnect(); if (frame !== null) cancelFrame(frame); gallery.removeEventListener('load', schedule, true); };
+      }, [signature]);
+      return h('div', { className: 'tj-photo-grid', ref: box }, ...entries.map(entry => h('div', { key: entry.id, className: 'tj-photo-item', 'data-photo-id': entry.id }, entry.child)));
+    }
+    function RecordDetail({ record, matchedPhotoIds = [], api, back, updated, notify, download, refresh, onDelete }) {
       const [editing, setEditing] = useState(false), [title, setTitle] = useState(record.title || ''), [date, setDate] = useState(record.date || ''), [note, setNote] = useState(record.note || ''), [busy, setBusy] = useState(false), [error, setError] = useState('');
       const [visiblePhotos, setVisiblePhotos] = useState(24);
-      const allPhotos = useRef(null), editBaseline = useRef(null);
+      const allPhotos = useRef(null), editBaseline = useRef(null), editSession = useRef(false), editFlight = useRef(false), composing = useRef(false);
       useEffect(() => { if (!editing) { setTitle(record.title || ''); setDate(record.date || ''); setNote(record.note || ''); } }, [record.title, record.date, record.note, editing]);
       useEffect(() => { setVisiblePhotos(24); }, [record.id]);
       const groups = recordCityGroups(record), totalPhotos = record.media?.length || 0;
@@ -497,26 +789,28 @@ html[data-platform=darwin]:not([data-fullscreen]) .tj-archive-toolbar{top:var(--
       const matching = [...new Set(matchedPhotoIds)].map((id) => byId.get(id)).filter(Boolean);
       let remainingPhotos = visiblePhotos;
       const visibleGroups = groups.map((group) => { const photos = group.photos.slice(0, Math.max(0, remainingPhotos)); remainingPhotos -= photos.length; return { ...group, total: group.photos.length, photos }; }).filter((group) => group.photos.length);
-      function toggleEdit() { if (!editing) { editBaseline.current = { title: record.title || '', date: record.date || '', note: record.note || '' }; setTitle(editBaseline.current.title); setDate(editBaseline.current.date); setNote(editBaseline.current.note); } setEditing(!editing); }
+      function toggleEdit() { if (editSession.current || editFlight.current) return; editSession.current = true; composing.current = false; editBaseline.current = { title: record.title || '', date: record.date || '', note: record.note || '' }; setTitle(editBaseline.current.title); setDate(editBaseline.current.date); setNote(editBaseline.current.note); setError(''); setEditing(true); }
+      function cancelDayEdit() { if (!editFlight.current) { editSession.current = false; composing.current = false; setTitle(record.title || ''); setDate(record.date || ''); setNote(record.note || ''); setEditing(false); setError(''); } }
       async function save(event) {
-        event.preventDefault(); const patch = { id: record.id }, values = { title, date, note };
+        event.preventDefault(); event.stopPropagation?.(); if (editFlight.current || !editSession.current || composing.current) return;
+        const patch = { id: record.id }, values = { title, date, note };
         for (const key of ['title', 'date', 'note']) if (values[key] !== editBaseline.current?.[key]) patch[key] = values[key];
-        if (Object.keys(patch).length === 1) { setEditing(false); return; }
-        setBusy(true); setError(''); try { const result = await api('/edit-record', { body: patch }); updated(result.record); setEditing(false); notify('这一天的信息已更新。'); } catch (problem) { setError(problem.message); } finally { setBusy(false); }
+        if (Object.keys(patch).length === 1) { editSession.current = false; setEditing(false); return; }
+        editFlight.current = true; setBusy(true); setError(''); try { const result = await api('/edit-record', { body: patch }); updated(result.record); editSession.current = false; setEditing(false); notify('这一天的信息已更新。'); } catch (problem) { setError(problem.message); } finally { editFlight.current = false; setBusy(false); }
       }
       async function reprocess() { setBusy(true); try { await api('/reprocess', { body: { id: record.id } }); notify('已开始重新整理，原图和手动更正会保留。'); await refresh(); } catch (problem) { setError(problem.message); } finally { setBusy(false); } }
       return h(React.Fragment, null, h('button', { className: 'tj-btn', onClick: back }, '← 返回每日档案'),
-        h('div', { className: 'tj-detail-top tj-row tj-between' }, h('div', null, h('div', { className: 'tj-eyebrow' }, dateText(record.date)), h('h2', { className: 'tj-detail-title' }, record.title || '一段旅行记忆'), h('p', { className: 'tj-hint' }, `${record.media?.length || 0} 张照片 · 保存于 ${displayTime(record.savedAt)}`)), h('div', { className: 'tj-row' }, h('button', { className: 'tj-btn small', onClick: toggleEdit }, editing ? '取消编辑' : '修改这一天'), h('button', { className: 'tj-btn small', disabled: busy, onClick: reprocess }, '重新整理'))),
+        h('div', { className: 'tj-detail-top tj-row tj-between' }, h('div', null, h('div', { className: 'tj-eyebrow' }, dateText(record.date)), h('h2', { className: 'tj-detail-title' }, record.title || '一段旅行记忆'), h('p', { className: 'tj-hint' }, `${record.media?.length || 0} 张照片 · 保存于 ${displayTime(record.savedAt)}`)), h('div', { className: 'tj-row' }, !editing ? h('button', { className: 'tj-btn small', onClick: toggleEdit, disabled: busy }, '修改这一天') : null, h('button', { className: 'tj-btn small', disabled: busy, onClick: reprocess }, '重新整理'))),
         error ? h('div', { className: 'tj-notice error' }, error) : null,
         record.demo ? h('div', { className: 'tj-notice' }, '演示记录：用于验证导入、AI 整理和地图，所示时间与坐标为测试数据。', h(DemoSources, { api })) : null,
-        editing ? h('form', { className: 'tj-card', onSubmit: save }, h('div', { className: 'tj-two' }, h('label', { className: 'tj-field' }, h('span', null, '标题'), h('input', { className: 'tj-input', value: title, maxLength: 200, onChange: (e) => setTitle(e.target.value) })), h('label', { className: 'tj-field' }, h('span', null, '日期'), h('input', { className: 'tj-input', type: 'date', value: date, onChange: (e) => setDate(e.target.value) }))), h('label', { className: 'tj-field' }, h('span', null, '补充一句（保留此前原话）'), h('textarea', { className: 'tj-input tj-textarea', value: note, maxLength: 20000, onChange: (e) => setNote(e.target.value) })), h('button', { className: 'tj-btn primary', disabled: busy }, '保存修改')) : null,
+        editing ? h('form', { className: 'tj-card', 'aria-busy': busy, onSubmit: save, onCompositionStart: () => { composing.current = true; }, onCompositionEnd: () => { composing.current = false; }, onBlur: event => { if (!event.currentTarget?.contains?.(event.relatedTarget)) cancelDayEdit(); }, onKeyDown: event => { if (event.isComposing || event.nativeEvent?.isComposing || event.keyCode === 229 || event.nativeEvent?.keyCode === 229 || composing.current) return; if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation?.(); cancelDayEdit(); } else if (event.key === 'Enter') return save(event); } }, h('div', { className: 'tj-photo-edit-hint' }, h('span', { className: 'tj-photo-edit-badge' }, '编辑中'), 'Enter 保存 · 点击空白取消'), h('div', { className: 'tj-two' }, h('label', { className: 'tj-field' }, h('span', null, '标题'), h('input', { className: 'tj-input', value: title, maxLength: 200, readOnly: busy, autoFocus: true, onChange: (e) => setTitle(e.target.value) })), h('label', { className: 'tj-field' }, h('span', null, '日期'), h('input', { className: 'tj-input', type: 'date', value: date, readOnly: busy, onChange: (e) => setDate(e.target.value) }))), h('label', { className: 'tj-field' }, h('span', null, '补充一句（保留此前原话）'), h('textarea', { className: 'tj-input tj-textarea', value: note, maxLength: 20000, readOnly: busy, onChange: (e) => setNote(e.target.value) }))) : null,
         record.summary ? h('div', { className: 'tj-card' }, h('div', { className: 'tj-eyebrow' }, '这一天的记忆'), h('p', { style: { whiteSpace: 'pre-wrap', marginTop: 12, fontSize: 14, lineHeight: 1.9 } }, record.summary), h('div', { className: 'tj-tags', style: { marginTop: 13 } }, ...(record.tags || []).map((tag, i) => h('span', { className: 'tj-tag', key: i }, tag)))) : null,
         record.summaryError ? h('div', { className: 'tj-notice' }, '原图已保存，AI 整理暂未完成：', record.summaryError) : null,
         record.notes?.length ? h('div', { className: 'tj-card' }, h('h2', null, record.notesSharedAcrossDays ? '这批照片的说明（跨多天）' : '你当时说的话'), record.notesSharedAcrossDays ? h('p', { className: 'tj-hint' }, '原话保留并关联这批照片，没有强行分配到某一天。') : null, ...(record.notes || []).map((item, i) => h('div', { className: 'tj-note', key: i }, noteText(item)))) : null,
         record.note ? h('div', { className: 'tj-card' }, h('h2', null, '后来的补充'), h('p', { style: { whiteSpace: 'pre-wrap' } }, record.note)) : null,
-        matching.length ? h('section', { className: 'tj-matched-photos' }, h('div', { className: 'tj-row tj-between', style: { margin: '24px 0 12px' } }, h('div', null, h('h2', null, '本次匹配的照片'), h('p', { className: 'tj-hint' }, `共 ${matching.length} 张匹配${matching.length > 6 ? '，先展示 6 张' : ''}；下方仍可按城市查看当天全部照片。`)), h('button', { className: 'tj-btn small', type: 'button', onClick: () => allPhotos.current?.scrollIntoView({ block: 'start', behavior: 'smooth' }) }, '查看当天全部照片')), h('div', { className: 'tj-photo-grid' }, ...matching.slice(0, 6).map((media) => h(Photo, { key: media.id, media, recordId: record.id, api, updated, notify, download, onMenu })))) : null,
+        matching.length ? h('section', { className: 'tj-matched-photos' }, h('div', { className: 'tj-row tj-between', style: { margin: '24px 0 12px' } }, h('div', null, h('h2', null, '本次匹配的照片'), h('p', { className: 'tj-hint' }, `共 ${matching.length} 张匹配${matching.length > 6 ? '，先展示 6 张' : ''}；下方仍可按城市查看当天全部照片。`)), h('button', { className: 'tj-btn small', type: 'button', onClick: () => allPhotos.current?.scrollIntoView({ block: 'start', behavior: 'smooth' }) }, '查看当天全部照片')), h(PhotoGallery, null, ...matching.slice(0, 6).map((media) => h(Photo, { key: media.id, media, recordId: record.id, api, updated, notify, download, onDelete })))) : null,
         matching.length ? h('h2', { ref: allPhotos, style: { marginTop: 28 } }, '当天全部照片') : null,
-        ...visibleGroups.map((group) => h('section', { className: 'tj-city-section', key: group.key }, h('div', { className: 'tj-city-heading' }, h('h2', null, group.name), h('span', null, `${group.total} 张照片`)), h('div', { className: 'tj-photo-grid' }, ...group.photos.map((media) => h(Photo, { key: media.id, media, recordId: record.id, api, updated, notify, download, onMenu }))))),
+        ...visibleGroups.map((group) => h('section', { className: 'tj-city-section', key: group.key }, h('div', { className: 'tj-city-heading' }, h('h2', null, group.name), h('span', null, `${group.total} 张照片`)), h(PhotoGallery, null, ...group.photos.map((media) => h(Photo, { key: media.id, media, recordId: record.id, api, updated, notify, download, onDelete }))))),
         totalPhotos ? h(LoadMore, { count: Math.min(visiblePhotos, totalPhotos), total: totalPhotos, hasMore: visiblePhotos < totalPhotos, onMore: () => setVisiblePhotos((count) => Math.min(count + 24, totalPhotos)), unit: '张照片' }) : null);
     }
     let geoCache = null;
@@ -1163,7 +1457,7 @@ html[data-platform=darwin]:not([data-fullscreen]) .tj-archive-toolbar{top:var(--
         }
         const dataEpoch = mutationEpoch.current;
         try {
-          const timeoutMs = options.timeoutMs || (path === '/import' ? 600000 : path.startsWith('/search') || path === '/demo' || path.startsWith('/archive?') && new URLSearchParams(path.split('?')[1]).has('q') ? 120000 : 15000);
+          const timeoutMs = options.timeoutMs || (path === '/import' ? 600000 : path.startsWith('/search') || path.startsWith('/archive?') && new URLSearchParams(path.split('?')[1]).has('q') ? 150000 : path === '/demo' ? 120000 : 15000);
           const data = await fetchJSON(API + path, init, timeoutMs);
           if (archiveRequest && epoch !== libraryEpoch.current) throw Object.assign(new Error('资料文件夹已切换，请在当前资料中重试。'), { stale: true });
           if (archiveRequest && !mutation && !/^\/imports(?:[/?]|$)/.test(path) && dataEpoch !== mutationEpoch.current) throw Object.assign(new Error('记录已更新，请重试。'), { stale: true });
@@ -1314,22 +1608,29 @@ html[data-platform=darwin]:not([data-fullscreen]) .tj-archive-toolbar{top:var(--
       }
       function updated(value, options = {}) {
         const id = options.recordId || value?.id || recordId.current, deleted = options.deleted || value === null;
+        const moved = Boolean(options.movedFromRecordId && value && options.movedFromRecordId !== value.id);
+        const changes = moved ? new Map([[options.movedFromRecordId, options.previousRecord ?? null], [value.id, value]]) : new Map([[id, deleted ? null : value]]);
         mutationEpoch.current++; stateRequest.current++; cancelPage(); view.current.openRequest++; view.current.searchRequest++; setSearching(false);
-        if (recordId.current === id) { setRecord(deleted ? null : value); recordId.current = deleted ? null : value?.id; if (deleted) setDetailMatches([]); }
-        function patch(item) {
-          if (item.id !== id) return item;
-          if (deleted) return null;
-          const ids = new Set((value.media || []).map((photo) => photo.id));
-          const matchedPhotoIds = (item.matchedPhotoIds || []).filter((photoId) => ids.has(photoId));
-          const cover = (value.media || []).find((photo) => photo.previewUrl && matchedPhotoIds.includes(photo.id)) || (value.media || []).find((photo) => photo.previewUrl);
-          const smallCover = cover ? { ...cover, previewUrl: /[?&]size=/.test(cover.previewUrl) ? cover.previewUrl.replace(/([?&])size=[^&]*/, '$1size=480') : cover.previewUrl + (cover.previewUrl.includes('?') ? '&' : '?') + 'size=480' } : null;
-          return { ...item, title: value.title, date: value.date, summary: value.summary, tags: value.tags, cityGroups: (value.cityGroups || []).map(({ key, name, country, province }) => ({ key, name, country, province })), photoCount: value.media?.length ?? item.photoCount, media: smallCover ? [smallCover] : [], matchedPhotoIds };
+        if (moved && (recordId.current === options.movedFromRecordId || recordId.current === id)) {
+          setRecord(value); recordId.current = value.id; setDetailMatches([]);
+          if (scrollArea.current) scrollArea.current.scrollTop = 0;
+        } else if (changes.has(recordId.current)) {
+          const current = changes.get(recordId.current); setRecord(current); recordId.current = current?.id || null; if (!current) setDetailMatches([]);
         }
-        if (list.current.snapshot) { const snapshot = list.current.snapshot, records = snapshot.records.map(patch).filter(Boolean); publishPage({ ...snapshot, records, total: deleted ? Math.max(0, snapshot.total - 1) : snapshot.total }); }
+        function patch(item) {
+          if (!changes.has(item.id)) return item;
+          const changed = changes.get(item.id); if (!changed) return null;
+          const ids = new Set((changed.media || []).map((photo) => photo.id));
+          const matchedPhotoIds = (item.matchedPhotoIds || []).filter((photoId) => ids.has(photoId));
+          const cover = (changed.media || []).find((photo) => photo.previewUrl && matchedPhotoIds.includes(photo.id)) || (changed.media || []).find((photo) => photo.previewUrl);
+          const smallCover = cover ? { ...cover, previewUrl: /[?&]size=/.test(cover.previewUrl) ? cover.previewUrl.replace(/([?&])size=[^&]*/, '$1size=480') : cover.previewUrl + (cover.previewUrl.includes('?') ? '&' : '?') + 'size=480' } : null;
+          return { ...item, title: changed.title, date: changed.date, summary: changed.summary, tags: changed.tags, cityGroups: (changed.cityGroups || []).map(({ key, name, country, province }) => ({ key, name, country, province })), photoCount: changed.media?.length ?? item.photoCount, media: smallCover ? [smallCover] : [], matchedPhotoIds };
+        }
+        if (list.current.snapshot) { const snapshot = list.current.snapshot, records = snapshot.records.map(patch).filter(Boolean); publishPage({ ...snapshot, records, total: deleted && !moved ? Math.max(0, snapshot.total - 1) : snapshot.total }); }
         // Edits/deletions can invalidate textual and day-context search evidence.
         // Remove only the changed result; do not spend another model call silently.
-        setResults((before) => { const next = before === null ? null : before.filter((item) => item.id !== id); resultView.current = next; return next; });
-        if (view.current.search) { setDetailMatches([]); setSearchNotice('有记录已修改，请重新搜索更新结果。'); }
+        setResults((before) => { const next = before === null ? null : before.filter((item) => !changes.has(item.id)); resultView.current = next; return next; });
+        if (view.current.search) { if (!moved) setDetailMatches([]); setSearchNotice('有记录已修改，请重新搜索更新结果。'); }
         setRevision((before) => before + 1);
         refresh().catch((problem) => { if (!problem.stale) setError(problem.message); });
       }
@@ -1344,6 +1645,10 @@ html[data-platform=darwin]:not([data-fullscreen]) .tj-archive-toolbar{top:var(--
         setMenu({ ...item, library: actionLibrary, epoch: actionEpoch, x: Math.max(8, Math.min(event.clientX || 8, (window.innerWidth || 1200) - 180)), y: Math.max(8, Math.min(event.clientY || 8, (window.innerHeight || 800) - (item.cover ? 140 : 100))) });
       }
       function requestDelete() { if (!menu) return; setConfirmation(menu); setDeleteError(''); setMenu(null); }
+      function requestPhotoDelete(item) {
+        checkActionLibrary(); if (mutationFlight.current) return;
+        setConfirmation({ ...item, kind: 'photo', library: actionLibrary, epoch: actionEpoch }); setDeleteError(''); setMenu(null);
+      }
       async function confirmDelete() {
         const item = confirmation; if (!item || deleteFlight.current) return;
         if (item.library !== library.current || item.epoch !== libraryEpoch.current) { setConfirmation(null); return; }
@@ -1456,7 +1761,7 @@ html[data-platform=darwin]:not([data-fullscreen]) .tj-archive-toolbar{top:var(--
       const pending = Number(summary.pending ?? summary.pendingJobs ?? summary.processing ?? 0) || 0;
       const photoCount = summary.photos ?? summary.photoCount ?? (state?.records || []).reduce((n, item) => n + (item.photoCount ?? item.media?.length ?? 0), 0);
       const archiveVisible = state && storageReady && tab === 'records' && !record;
-      return h('div', { className: 'tj', ref: scrollArea }, h('style', null, CSS + GROUP_CSS + ACTION_CSS + ARCHIVE_TOOLBAR_CSS + ARCHIVE_BROWSE_CSS + ARCHIVE_LAYOUT_CSS), h('div', { className: 'tj-wrap' },
+      return h('div', { className: 'tj', ref: scrollArea }, h('style', null, CSS + GROUP_CSS + ACTION_CSS + ARCHIVE_TOOLBAR_CSS + ARCHIVE_BROWSE_CSS + ARCHIVE_LAYOUT_CSS + PHOTO_CSS), h('div', { className: 'tj-wrap' + (record ? ' tj-detail-wrap' : '') },
         h('header', { className: 'tj-hero' }, h('div', null, h('div', { className: 'tj-eyebrow' }, 'PLACES · MOMENTS · MEMORIES'), h('h1', null, '旅行记忆'), h('p', { className: 'tj-muted' }, '随手留下照片和几句话，日后凭一点印象找回来。')), h('div', { className: 'tj-hero-actions' }, h('div', { className: 'tj-stat' }, h('div', { className: 'tj-count' }, storageReady ? summary.records || 0 : '—'), h('small', null, '段记忆')), h('div', { className: 'tj-stat' }, h('div', { className: 'tj-count' }, storageReady ? photoCount : '—'), h('small', null, '张照片')), h('button', { className: 'tj-btn primary', disabled: !storageReady, onClick: () => selectTab('import') }, h(Icon, { name: 'plus', size: 16 }), '导入照片'))),
         h('div', { className: archiveVisible ? 'tj-archive-toolbar' : undefined },
           h('nav', { className: 'tj-nav', role: 'tablist', 'aria-label': '旅行记忆功能' }, ...[['records', '每日档案', 'journal'], ['map', '城市足迹', 'map'], ['import', '导入照片', 'photo'], ['settings', '设置与存储', 'settings']].map(([id, label, icon]) => h('button', { key: id, role: 'tab', 'aria-selected': tab === id, onClick: () => selectTab(id) }, h(Icon, { name: icon, size: 16 }), label))),
@@ -1480,7 +1785,7 @@ html[data-platform=darwin]:not([data-fullscreen]) .tj-archive-toolbar{top:var(--
         state && storageReady ? h(ImportPanel, { key: `import:${state.storage?.accessToken || state.storage?.libraryId || 'default'}`, api: actionApi, state, visible: tab === 'import', onShow: () => selectTab('import'), notify: setToast, onSaved: () => { refresh().catch((problem) => { if (!problem.stale) setError(problem.message); }); } }) : null,
         state && tab === 'settings' ? h(Settings, { key: `settings:${state.storage?.accessToken || state.storage?.libraryId || 'default'}`, state, api, archiveApi: actionApi, refresh, locationsUpdated: () => { clearSearch(false); return refresh(); }, notify: setToast }) : null,
         state && storageReady && tab === 'map' ? h(Footprints, { key: `map:${state.storage?.accessToken || state.storage?.libraryId || 'default'}`, api, onCity, revision, footprintLevel: state.config?.footprintLevel || 'city' }) : null,
-        state && storageReady && tab === 'records' && record ? h(RecordDetail, { key: `${state.storage?.accessToken || state.storage?.libraryId || ''}:${record.id}`, record, matchedPhotoIds: detailMatches, api: actionApi, updated: actionUpdated, onMenu: showMenu, back: closeRecord, notify: setToast, download, refresh }) : null,
+        state && storageReady && tab === 'records' && record ? h(RecordDetail, { key: `${state.storage?.accessToken || state.storage?.libraryId || ''}:${record.id}`, record, matchedPhotoIds: detailMatches, api: actionApi, updated: actionUpdated, onDelete: requestPhotoDelete, back: closeRecord, notify: setToast, download, refresh }) : null,
         archiveVisible && archiveBrowse ? renderBrowse() : archiveVisible ? h(React.Fragment, null,
           results !== null && searchNotice ? h('p', { className: 'tj-notice' }, searchNotice) : null,
           records.length ? h('div', { className: 'tj-grid' }, ...records.map((item) => h(RecordCard, { key: `${state.storage?.accessToken || state.storage?.libraryId || ''}:${item.id}`, record: item, open, api: actionApi, updated: actionUpdated, onMenu: showMenu, notify: setToast }))) : h('div', { className: 'tj-card tj-empty' }, h('div', { className: 'tj-empty-mark' }, h(Icon, { name: results === null ? 'photo' : 'search', size: 30 })), h('h2', null, results === null ? '从一组照片开始' : '暂时没有找到这段回忆'), h('p', { className: 'tj-muted' }, results === null ? '混合选择不同日期的照片，自动归入各天的旅行档案。' : '换一个地点、物品，或你当时说过的词试试。'), results === null ? h(React.Fragment, null, h('div', { className: 'tj-row', style: { justifyContent: 'center' } }, h('button', { className: 'tj-btn primary', onClick: () => setTab('import') }, h(Icon, { name: 'plus', size: 16 }), '导入第一组照片'), h('button', { className: 'tj-btn', disabled: demoBusy, onClick: runDemo }, demoBusy ? h('span', { className: 'tj-spinner' }) : null, demoBusy ? '正在导入示例…' : '用示例照片试试')), h('p', { className: 'tj-hint', style: { marginTop: 13 } }, '3 天 5 张公开照片，时间地点为模拟数据。'), h(DemoSources, { api })) : null),

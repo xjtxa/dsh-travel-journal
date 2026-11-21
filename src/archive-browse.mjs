@@ -81,12 +81,12 @@ export function createArchiveBrowse({getRecords,getDataRevision,getRevision,sear
   }
   const hitMap=hits=>new Map(hits.map(hit=>[hit.id,new Set(hit.matchedPhotoIds)]));
   const browseSignature=value=>digest(JSON.stringify([value.mode,value.reverse,value.q,value.place,value.province,value.city,value.month,value.mode==='random'?(value.seed||salt):'',value.searchId]));
-  function cover(list,scope){
+  function cover(list,scope,matchedOnly=false){
     if(!list.length)return null;
     const saved=getPreferences()?.[preferenceKey(scope)];
-    // An explicit cover belongs to the entire folder or day, even while the
-    // current query happens to match a different subset of its photographs.
-    const chosen=saved&&coverEntries(scope).find(entry=>entry.record.id===saved.recordId&&entry.photo.id===saved.photoId);
+    // Search day cards must show one of their matching photos. The saved daily
+    // preference is retained for the next unfiltered visit.
+    const chosen=saved&&(matchedOnly?list:coverEntries(scope)).find(entry=>entry.record.id===saved.recordId&&entry.photo.id===saved.photoId);
     if(chosen&&canUsePhoto(chosen.record,chosen.photo))return descriptor(chosen);
     // Stable pseudo-random priorities keep a group's fallback unchanged while
     // browsing and avoid reshuffling all covers after a different day is edited.
@@ -139,7 +139,7 @@ export function createArchiveBrowse({getRecords,getDataRevision,getRevision,sear
     const page=paginate(days,{...value,signature,compare,start});
     return {kind:'days',groups:[],records:page.selected.map(({list,record})=>{
       const matchedPhotoIds=[value.q,value.place,value.province,value.city].some(Boolean)?list.map(entry=>entry.photo.id):[],base=toCard(record);
-      const selectedCover=cover(list,{type:'day',key:record.id}),photo=selectedCover&&record.media.find(photo=>photo.id===selectedCover.photoId);
+      const selectedCover=cover(list,{type:'day',key:record.id},Boolean(value.q||value.place)),photo=selectedCover&&record.media.find(photo=>photo.id===selectedCover.photoId);
       if(!photo)return {...base,matchedPhotoIds,media:[]};
       return {...base,matchedPhotoIds,media:[{id:photo.id,name:photo.name,status:photo.status,relativePath:photo.relativePath,metadata:Object.fromEntries(['mime','width','height','capturedAt','bytes'].filter(k=>photo.metadata?.[k]!==undefined).map(k=>[k,photo.metadata[k]]))}]};
     }),months,total:days.length,hasMore:page.hasMore,nextCursor:page.nextCursor,revision:getRevision(),...searchInfo};

@@ -14,6 +14,16 @@ function conciseReasoning(info) {
   if (Array.isArray(info?.reasoning?.efforts) && info.reasoning.efforts.some((effort) => effort?.id === 'off')) return { reasoningEffort: 'off' };
   return typeof info?.reasoning?.defaultEffort === 'string' ? { reasoningDefault: info.reasoning.defaultEffort } : {};
 }
+function searchReasoning(info) {
+  const efforts = Array.isArray(info?.reasoning?.efforts) ? info.reasoning.efforts : [];
+  for (const id of ['high', 'medium', 'low', 'on']) {
+    if (efforts.some(effort => effort?.id === id)) return { reasoningEffort: id };
+  }
+  const declared = info?.reasoning?.defaultEffort;
+  if (typeof declared === 'string' && declared !== 'off') return { reasoningDefault: declared };
+  const enabled = efforts.find(effort => typeof effort?.id === 'string' && effort.id !== 'off');
+  return enabled ? { reasoningEffort: enabled.id } : conciseReasoning(info);
+}
 
 function actualUsage(value) {
   // DSH 0.2.1-rc.5 emits a cumulative `usage` chunk, separate from `finish`.
@@ -32,11 +42,11 @@ function notify(callback, value) {
   try { Promise.resolve(callback(Object.freeze({ ...value }))).catch(() => {}); } catch { /* Observers cannot invalidate the model result. */ }
 }
 
-async function withDeadline(config, externalSignal, work) {
+async function withDeadline(config, externalSignal, work, purpose = 'archive') {
   const requested = Number(config.modelTimeoutMs);
-  const timeoutMs = Number.isFinite(requested) && requested > 0 ? Math.min(requested, 300_000) : 60_000;
+  const timeoutMs = Number.isFinite(requested) && requested > 0 ? Math.min(requested, 300_000) : purpose === 'search' ? 120_000 : 60_000;
   const controller = new AbortController();
-  const timeoutError = failure('AI 整理超时，已保存的原图和原话不受影响', 'MODEL_TIMEOUT');
+  const timeoutError = failure(purpose === 'search' ? 'AI 检索超时，请缩小范围或重试' : 'AI 整理超时，已保存的原图和原话不受影响', 'MODEL_TIMEOUT');
   const cancel = () => controller.abort(failure('AI 整理已取消', 'MODEL_ABORTED'));
   let rejectAborted;
   const aborted = new Promise((_, reject) => { rejectAborted = reject; });
@@ -86,7 +96,7 @@ function createAdapter(ctx, getConfig, fixedModel = null) {
     return { provider: String(selected.provider), model: String(selected.model), explicit };
   }
 
-  async function chooseModel(llm, config, needsImages, session) {
+  async function chooseModel(llm, config, needsImages, session, purpose = 'archive') {
     const selected = baseSelection(config);
     if (!selected) throw failure('请先在 DSH 中配置默认模型，或在旅行记忆设置中指定模型', 'MODEL_SELECTION');
     const choice = {
@@ -112,13 +122,14 @@ function createAdapter(ctx, getConfig, fixedModel = null) {
         throw failure('DSH 账号中的 DeepSeek V4.1 Flash 暂不可用于照片整理', 'MODEL_VISION_UNAVAILABLE');
       }
       const efforts = exactInfo.reasoning?.efforts;
-      if (Array.isArray(efforts) && !efforts.some((effort) => effort?.id === 'off')) {
+      if (purpose !== 'search' && Array.isArray(efforts) && !efforts.some((effort) => effort?.id === 'off')) {
         throw failure('当前 DSH 模型未提供关闭思考的选项', 'MODEL_REASONING_UNAVAILABLE');
       }
       // The bundled DeepSeek Account adapter maps off to thinking.type=disabled.
-      return { ...choice, displayName: fixedModel.displayName, inputModalities: [...exactInfo.inputModalities], reasoningEffort: 'off' };
+      const reasoning = purpose === 'search' ? searchReasoning(exactInfo) : { reasoningEffort: 'off' };
+      return { ...choice, displayName: fixedModel.displayName, inputModalities: [...exactInfo.inputModalities], ...reasoning };
     }
-    if (!needsImages) return { ...choice, ...conciseReasoning(exactInfo) };
+    if (!needsImages) return { ...choice, ...(purpose === 'search' ? searchReasoning(exactInfo) : conciseReasoning(exactInfo)) };
     if (supportsImages(exactInfo)) return { ...choice, inputModalities: [...exactInfo.inputModalities], ...conciseReasoning(exactInfo) };
     if (selected.explicit) throw failure('指定模型未声明看图能力；请在旅行记忆设置中选择视觉模型，原图仍保留', 'MODEL_VISION_UNAVAILABLE');
     const models = typeof llm.listModels === 'function'
@@ -135,7 +146,7 @@ function createAdapter(ctx, getConfig, fixedModel = null) {
     throw failure('当前模型未声明看图能力，且同一提供方没有已声明可用的视觉模型；请手动指定，原图仍保留', 'MODEL_VISION_UNAVAILABLE');
   }
 
-  async function askModel({ system = '', text, images = [], maxTokens = 1000, onUsage, onModel, signal: externalSignal } = {}) {
+  async function askModel({ system = '', text, images = [], maxTokens = 1000, purpose = 'archive', onUsage, onModel, signal: externalSignal } = {}) {
     const config = getConfig() || {};
     let latestUsage = null;
     let chosen = null;
@@ -144,7 +155,7 @@ function createAdapter(ctx, getConfig, fixedModel = null) {
         const llm = service('llm');
         if (!llm?.stream) throw failure('DSH 模型服务不可用', 'MODEL_SERVICE');
         if (!Array.isArray(images)) throw failure('图片输入格式无效', 'MODEL_INPUT');
-        chosen = await chooseModel(llm, config, images.length > 0, session);
+        chosen = await chooseModel(llm, config, images.length > 0, session, purpose);
         session.check();
         notify(onModel, chosen);
         let content = [{ type: 'text', text: String(text ?? '') }];
@@ -192,7 +203,7 @@ function createAdapter(ctx, getConfig, fixedModel = null) {
         }
         if (!result.trim()) throw failure('AI 返回空结果', 'MODEL_EMPTY');
         return result.trim();
-      });
+      }, purpose);
     } finally {
       // Report once, including provider-reported usage on failed/aborted calls.
       // A missing usage chunk stays unknown; no character/image estimate is made.
@@ -210,13 +221,13 @@ function createAdapter(ctx, getConfig, fixedModel = null) {
     const selected = askModel.getModelSelection();
     return selected ? JSON.stringify([selected.provider, selected.model]) : 'unconfigured';
   };
-  askModel.resolveModelSelection = async ({ images = false, signal } = {}) => {
+  askModel.resolveModelSelection = async ({ images = false, purpose = 'archive', signal } = {}) => {
     const config = getConfig() || {};
     return withDeadline(config, signal, (session) => {
       const llm = service('llm');
       if (!llm?.stream) throw failure('DSH 模型服务不可用', 'MODEL_SERVICE');
-      return chooseModel(llm, config, Boolean(images), session);
-    });
+      return chooseModel(llm, config, Boolean(images), session, purpose);
+    }, purpose);
   };
   return askModel;
 }

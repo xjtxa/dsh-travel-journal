@@ -68,12 +68,20 @@ export function createGeoIndex({ read = (path) => readFile(new URL(path, import.
   let loading = null;
   let displayLoading = null;
   let placeChoices = null;
+  const sources = new Map();
+  const districtChoices = new Map();
+  // Catalog requests share parsed source files with geocoding, but never build
+  // spatial indexes merely to display province/city/district selectors.
+  function source(name) {
+    if (!sources.has(name)) sources.set(name, Promise.resolve().then(() => read(FILES[name])).then(JSON.parse).catch(error => {
+      sources.delete(name); throw error;
+    }));
+    return sources.get(name);
+  }
   async function load() {
     if (!loading) {
       loading = (async () => {
-        const counties = JSON.parse(await read(FILES.counties));
-        const provinces = JSON.parse(await read(FILES.provinces));
-        const cities = JSON.parse(await read(FILES.cities));
+        const [counties, provinces, cities] = await Promise.all(['counties', 'provinces', 'cities'].map(source));
         return { counties, provinces, cities,
           grid: buildGrid(counties), cityGrid: buildGrid(cities), provinceGrid: buildGrid(provinces) };
       })().catch((error) => { loading = null; throw error; });
@@ -132,7 +140,7 @@ export function createGeoIndex({ read = (path) => readFile(new URL(path, import.
    * aliases or historical county names are introduced for manual selections. */
   async function listPlaceChoices() {
     if(!placeChoices){
-      const {provinces,cities}=await load();
+      const [provinces,cities]=await Promise.all(['provinces','cities'].map(source));
       const groups=new Map(provinces.filter(p=>typeof p.n==='string'&&p.n.trim()).map(p=>[p.n,new Set()]));
       for(const city of cities)if(groups.has(city.p)&&typeof city.n==='string'&&city.n.trim())groups.get(city.p).add(city.n);
       placeChoices=[...groups].map(([name,values])=>({name,cities:[...values].sort((a,b)=>a.localeCompare(b,'zh-CN'))})).sort((a,b)=>a.name.localeCompare(b.name,'zh-CN'));
@@ -140,5 +148,20 @@ export function createGeoIndex({ read = (path) => readFile(new URL(path, import.
     return placeChoices.map(({name,cities})=>({name,cities:[...cities]}));
   }
 
-  return { locate, file, load, listPlaceChoices };
+  /** Recorded county labels under an exact catalog parent. Older source names
+   * remain verbatim; missing county coverage is represented by an empty list. */
+  async function listDistrictChoices(province, city) {
+    const provinces = await listPlaceChoices();
+    if (!provinces.find(entry => entry.name === province)?.cities.includes(city)) return [];
+    const key = JSON.stringify([province, city]);
+    if (!districtChoices.has(key)) {
+      const counties = await source('counties');
+      const names = counties.filter(county => county.p === province && county.c === city
+        && typeof county.n === 'string' && county.n.trim()).map(county => county.n);
+      districtChoices.set(key, [...new Set(names)].sort((a,b) => a.localeCompare(b,'zh-CN')));
+    }
+    return [...districtChoices.get(key)];
+  }
+
+  return { locate, file, load, listPlaceChoices, listDistrictChoices };
 }

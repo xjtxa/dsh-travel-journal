@@ -180,7 +180,8 @@ export function createTravelEngine({dataDir,getConfig=()=>({}),downloadMedia,ins
   }
   const writeJSON=(path,value)=>atomicJSON(path,value,assertStorage);
   const shutdown=new AbortController();
-  const statePath=join(dataDir,'state.json'), cachePath=join(dataDir,'analysis-cache.json');
+  const statePath=join(dataDir,'state.json'), cachePath=join(dataDir,'analysis-cache.json'), photoMovePath=join(dataDir,'pending-photo-move.json');
+  let pendingPhotoMove=null;
   let state=readJSON(statePath,{schemaVersion:SCHEMA,seen:[],drafts:{},usage:emptyUsage()});
   if(![1,SCHEMA].includes(state?.schemaVersion) || !Array.isArray(state.seen) || !state.drafts || typeof state.drafts!=='object' || Array.isArray(state.drafts)) throw new Error('档案状态格式不受支持');
   for(const draft of Object.values(state.drafts)) {
@@ -189,7 +190,7 @@ export function createTravelEngine({dataDir,getConfig=()=>({}),downloadMedia,ins
   }
   state.schemaVersion=SCHEMA; state.usage={...emptyUsage(),...state.usage};
   const analyses=readJSON(cachePath,{}), records=new Map(), deletedRecords=new Set(), seen=new Set(state.seen), sources=new Map();
-  const originalPaths=new Map(),knownPhotos=new Map(),knownSizes=new Set(),queuedReceipts=new Map(),repairJobs=new Map(),queuedCopies=new Set(),verifiedOriginals=new Map();
+  const originalPaths=new Map(),knownPhotos=new Map(),knownSizes=new Set(),queuedReceipts=new Map(),repairJobs=new Map(),queuedCopies=new Set(),verifiedOriginals=new Map(),relocatedPhotos=new Map();
   let hasUnknownOriginalSizes=false;
   let latestDeletion=-Infinity;
   const receiptKey=(jobId,itemId)=>JSON.stringify([jobId,itemId]);
@@ -220,7 +221,16 @@ export function createTravelEngine({dataDir,getConfig=()=>({}),downloadMedia,ins
       const key=record.id+'/'+entry.photoId;if(!repairJobs.has(key))repairJobs.set(key,new Set());repairJobs.get(key).add(entry.jobId);
     }
   }
-  function rememberRecord(record){for(const photo of record.media)rememberPhoto(record.id,photo,record.deletedAt);rememberRepairs(record);}
+  function rememberRecord(record){
+    for(const photo of record.media)rememberPhoto(record.id,photo,record.deletedAt);rememberRepairs(record);
+    if(record.relocatedPhotos!==undefined){
+      if(!record.relocatedPhotos||typeof record.relocatedPhotos!=='object'||Array.isArray(record.relocatedPhotos))throw new Error('照片归档位置记录无效');
+      for(const [photoId,targetId] of Object.entries(record.relocatedPhotos)){
+        if(!safeId(photoId)||!safeId(targetId))throw new Error('照片归档位置记录无效');
+        relocatedPhotos.set(record.id+'/'+photoId,targetId);
+      }
+    }
+  }
   const searchIndex=createTagSearchIndex(), dirtyIndex=new Set(), archiveSearches=new Map(), views=new Map(), cards=new Map(), mediaByRecord=new Map(), summaryVersions=new WeakMap();
   let indexReady=false,revision=1,recordsRevision=1,orderedCache=null,statisticsCache=null,mapCache=null,missingLocationCache=null;
   let foreground=Promise.resolve(), background=Promise.resolve(), placeBackground=Promise.resolve(), closed=false,lastError=null,closing=null;
@@ -232,7 +242,7 @@ export function createTravelEngine({dataDir,getConfig=()=>({}),downloadMedia,ins
   const isLivePhoto=(r,p)=>isLive(r)&&r.media.includes(p);
   const visibleRecords=()=>[...records.values()].filter(isVisible);
   const touch=()=>{revision++;};
-  const stamp=()=>now().toISOString(), persist=()=>{writeJSON(statePath,state);touch();};
+  const stamp=()=>now().toISOString(), persist=()=>{assertPhotoMoveReady();writeJSON(statePath,state);touch();};
   function viewOf(record) {
     if(!views.has(record.id))views.set(record.id,projected(record));
     return views.get(record.id);
@@ -292,6 +302,12 @@ export function createTravelEngine({dataDir,getConfig=()=>({}),downloadMedia,ins
     const last=selected.at(-1),nextCursor=hasMore?Buffer.from(JSON.stringify({v:1,date:last.date||'',savedAt:last.savedAt||'',id:last.id,photoId:last.photoId})).toString('base64url'):null;
     return {photos:selected.map(({recordId,photoId,name,date,title})=>({recordId,photoId,name,date,title})),nextCursor,hasMore,total:all.length};
   }
+  // A cross-day correction commits both after-images before any background job
+  // is admitted. Replaying the same journal is safe after an interrupted write.
+  if(existsSync(photoMovePath)){
+    if(lstatSync(photoMovePath).isSymbolicLink())throw new Error('待恢复的照片归档文件不能是链接');
+    completePhotoMove(readJSON(photoMovePath));
+  }
   for(const f of readdirSync(join(dataDir,'records')).filter(x=>x.endsWith('.json'))) {
     const r=readJSON(join(dataDir,'records',f));
     if(![1,SCHEMA].includes(r?.schemaVersion) || !safeId(r.id) || f!==r.id+'.json') throw new Error('资料库记录格式损坏，请检查资料文件夹');
@@ -301,6 +317,7 @@ export function createTravelEngine({dataDir,getConfig=()=>({}),downloadMedia,ins
     // A tombstone retains the entire original record for recovery, but is never
     // admitted to active views, search or background work after a restart.
     if(r.deletedAt){rememberDeletion(r.deletedAt);deletedRecords.add(r.id);continue;}
+    if(r.relocatedAt){deletedRecords.add(r.id);continue;}
     r.schemaVersion=SCHEMA;r.usage={...emptyUsage(),...r.usage};records.set(r.id,r);
   }
   for(const draft of Object.values(state.drafts))for(const p of draft.media)if(p.status==='saved'){
@@ -333,9 +350,10 @@ export function createTravelEngine({dataDir,getConfig=()=>({}),downloadMedia,ins
   for(const [key,draft] of Object.entries(state.drafts)) if(records.has(draft.id)) delete state.drafts[key];
   function queue(work) {
     if(closed) return Promise.reject(new Error('插件已经停止'));
-    const job=foreground.catch(()=>{}).then(()=>{if(closed)throw new Error('插件已经停止');assertStorage();return work();});foreground=job.catch(()=>{});return job;
+    const job=foreground.catch(()=>{}).then(()=>{if(closed)throw new Error('插件已经停止');assertStorage();if(pendingPhotoMove)completePhotoMove(pendingPhotoMove,true);return work();});foreground=job.catch(()=>{});return job;
   }
   function saveRecord(r) {
+    assertPhotoMoveReady();
     // Deleting a photo replaces the live record object. Old asynchronous tasks
     // may still hold its predecessor and must never overwrite the new version.
     if(deletedRecords.has(r.id)||r.deletedAt||(records.has(r.id)&&records.get(r.id)!==r))return false;
@@ -811,6 +829,12 @@ export function createTravelEngine({dataDir,getConfig=()=>({}),downloadMedia,ins
     });
   }
   function queuedResult(entry,success='saved') {
+    const visited=new Set();
+    while(!records.get(entry.recordId)?.media.some(photo=>photo.id===entry.photoId)&&!visited.has(entry.recordId)){
+      visited.add(entry.recordId);const next=relocatedPhotos.get(entry.recordId+'/'+entry.photoId);
+      if(!next)break;
+      entry.recordId=next;
+    }
     const r=records.get(entry.recordId),photo=r?.media.find(p=>p.id===entry.photoId);
     if(photo&&!confirmOriginal(photo))return null;
     return {status:photo?success:'deleted',...(photo?{recordId:entry.recordId}:{}),sha256:entry.sha256};
@@ -999,6 +1023,101 @@ export function createTravelEngine({dataDir,getConfig=()=>({}),downloadMedia,ins
     r.tags=[];r.summarySource='local-edit';r.summaryStatus='ready';delete r.summaryError;
     if(!r.explicitTitle)r.title=r.date?'旅行记录 '+r.date:'日期待补充';
   }
+  function assertPhotoMoveReady(){
+    if(pendingPhotoMove)throw new Error('照片日期归档尚未完成，请重试操作或重新打开资料库');
+  }
+  function completePhotoMove(move,publish=false){
+    if(move?.schemaVersion!==1||move.kind!=='photo-date-move'||!safeId(move.photoId)
+      ||!safeId(move.source?.id)||!safeId(move.target?.id)||move.source.id===move.target.id
+      ||move.source.schemaVersion!==SCHEMA||move.target.schemaVersion!==SCHEMA
+      ||move.source.ownerQQ!==move.target.ownerQQ||!move.coverChanges||typeof move.coverChanges!=='object'||Array.isArray(move.coverChanges))throw new Error('待恢复的照片归档记录无效');
+    validateStoredMedia(move.source.media);validateStoredMedia(move.target.media);
+    if(move.source.media.some(p=>p.id===move.photoId)||!move.target.media.some(p=>p.id===move.photoId)
+      ||move.source.relocatedPhotos?.[move.photoId]!==move.target.id||Boolean(move.source.relocatedAt)!==!move.source.media.length)throw new Error('待恢复的照片归档位置不符');
+    for(const record of [move.source,move.target])for(const photo of record.media)if(photo.status==='saved')checkedMedia(photo,{missing:true});
+    for(const [key,value] of Object.entries(move.coverChanges)){
+      if(key.length>2000||(value!==null&&(!value||!safeId(value.recordId)||!safeId(value.photoId))))throw new Error('待恢复的照片封面记录无效');
+    }
+    pendingPhotoMove=move;
+    writeJSON(recordPath(move.target.id),move.target);
+    writeJSON(recordPath(move.source.id),move.source);
+    const covers={...(state.archiveCovers||{})};
+    for(const [key,value] of Object.entries(move.coverChanges)){if(value===null)delete covers[key];else covers[key]=value;}
+    const nextState={...state,archiveCovers:covers};writeJSON(statePath,nextState);state=nextState;
+    assertStorage();unlinkSync(photoMovePath);syncDirectory(dataDir);pendingPhotoMove=null;
+    if(!publish)return;
+    const movedPhoto=move.target.media.find(p=>p.id===move.photoId),sha=movedPhoto.metadata?.sha256;
+    knownPhotos.get(sha)?.delete(move.source.id+'/'+move.photoId);
+    const oldRepairs=repairJobs.get(move.source.id+'/'+move.photoId);
+    if(oldRepairs){repairJobs.delete(move.source.id+'/'+move.photoId);repairJobs.set(move.target.id+'/'+move.photoId,oldRepairs);}
+    for(const entry of queuedReceipts.values())if(entry.recordId===move.source.id&&entry.photoId===move.photoId)entry.recordId=move.target.id;
+    records.set(move.target.id,move.target);refreshRecord(move.target);
+    if(move.source.relocatedAt){
+      records.delete(move.source.id);deletedRecords.add(move.source.id);rerun.delete(move.source.id);placeRerun.delete(move.source.id);
+      refreshRecord(move.source);searchIndex.remove(move.source.id);dirtyIndex.delete(move.source.id);
+    }else{records.set(move.source.id,move.source);refreshRecord(move.source);}
+    for(const record of [move.source,move.target]){
+      if(record.relocatedAt||record.summaryStatus==='queued')continue;
+      if(record.media.some(p=>['pending','processing'].includes(p.analysisStatus)))schedule(record.id,true);
+      if(record.media.some(p=>['pending','processing'].includes(p.placeStatus)))schedulePlaces(record.id,true);
+    }
+  }
+  function photoRecord(id,photoId){
+    const visited=new Set();let current=id;
+    while(!visited.has(current)){
+      visited.add(current);const record=records.get(current);
+      if(isVisible(record)&&record.media.some(p=>p.id===photoId))return record;
+      current=relocatedPhotos.get(current+'/'+photoId);if(!current)break;
+    }
+    const record=getRaw(id);if(!record.media.some(p=>p.id===photoId))throw new Error('照片不存在');
+    return record;
+  }
+  function movePhotoToDay(source,edited,photoId,date){
+    const at=stamp(),photo=edited.media.find(p=>p.id===photoId);
+    const existing=visibleRecords().find(r=>r.id!==source.id&&r.ownerQQ===source.ownerQQ&&Boolean(r.demo)===Boolean(source.demo)&&viewOf(r).date===date);
+    const target=existing?copy(existing):{id:randomUUID(),schemaVersion:SCHEMA,ownerQQ:source.ownerQQ,botQQ:source.botQQ,createdAt:at,savedAt:at,
+      title:date?'旅行记录 '+date:'日期待补充',explicitTitle:false,date,dateSource:date?'manual':'missing',dayGrouping:'capture-day',demo:Boolean(source.demo),events:[],notes:[],media:[],tags:[],summary:'',usage:emptyUsage()};
+    target.media.push(photo);target.dayGrouping='capture-day';target.undated=!date;target.updatedAt=at;
+    edited.media=edited.media.filter(p=>p.id!==photoId);edited.updatedAt=at;
+    edited.relocatedPhotos={...edited.relocatedPhotos,[photoId]:target.id};
+    const events=(source.events||[]).filter(event=>(event.mediaIds||[]).includes(photoId));
+    const sharedNotes=events.length?events:(source.notes||[]).map((text,index)=>({messageId:source.id+'-note-'+index,text,source:'photo-date-move',receivedAt:source.createdAt,mediaIds:[photoId]}));
+    for(const event of sharedNotes){
+      const copied={...copy(event),mediaIds:[photoId],sourceRecordId:event.sourceRecordId||source.id,batchDateCount:Math.max(2,event.batchDateCount||1)};
+      const previous=target.events.find(value=>value.messageId===copied.messageId&&value.source===copied.source&&value.batchId===copied.batchId);
+      if(previous){previous.mediaIds=[...new Set([...(previous.mediaIds||[]),photoId])];previous.batchDateCount=Math.max(previous.batchDateCount||1,copied.batchDateCount);}
+      else target.events.push(copied);
+      if(copied.text?.trim()&&!target.notes.includes(copied.text))target.notes.push(copied.text);
+    }
+    for(const event of edited.events||[]){
+      if((event.mediaIds||[]).includes(photoId))event.batchDateCount=Math.max(2,event.batchDateCount||1);
+      event.mediaIds=(event.mediaIds||[]).filter(id=>id!==photoId);
+    }
+    const repairs=(edited.queuedOriginalRepairs||[]).filter(entry=>entry.photoId===photoId);
+    if(repairs.length){target.queuedOriginalRepairs=[...(target.queuedOriginalRepairs||[]),...repairs];edited.queuedOriginalRepairs=edited.queuedOriginalRepairs.filter(entry=>entry.photoId!==photoId);}
+    const jobs=new Set([photo.queuedImport?.jobId,...repairs.map(entry=>entry.jobId)].filter(Boolean));
+    for(const jobId of jobs){
+      if(source.queuedJobs?.[jobId])target.queuedJobs={...target.queuedJobs,[jobId]:copy(source.queuedJobs[jobId])};
+      if(!edited.media.some(p=>p.queuedImport?.jobId===jobId)&&!(edited.queuedOriginalRepairs||[]).some(entry=>entry.jobId===jobId))delete edited.queuedJobs?.[jobId];
+    }
+    const revision={at,kind:'photo-date-move',photoId,fromRecordId:source.id,toRecordId:target.id,fromDate:viewOf(source).date,toDate:date};
+    for(const record of [edited,target]){
+      delete record.sourceFingerprint;delete record.sourceFingerprints;
+      record.revisions=[...(record.revisions||[]),revision];rebuildEditedSummary(record);
+      record.enrichmentStatus=record.media.some(p=>['pending','processing'].includes(p.placeStatus))?'pending':record.media.some(unresolvedPlace)?'partial':'ready';
+      if(Object.values(record.queuedJobs||{}).some(job=>!job.finished)){record.summaryStatus='queued';record.enrichmentStatus='queued';}
+    }
+    if(!edited.media.length)edited.relocatedAt=at;
+    const coverChanges={},sourceCoverKey=JSON.stringify(['day','',source.id]),targetCoverKey=JSON.stringify(['day','',target.id]);
+    for(const [key,cover] of Object.entries(state.archiveCovers||{}))if(cover.recordId===source.id&&cover.photoId===photoId){
+      if(key===sourceCoverKey){coverChanges[key]=null;if(!state.archiveCovers[targetCoverKey])coverChanges[targetCoverKey]={recordId:target.id,photoId};}
+      else coverChanges[key]={...cover,recordId:target.id};
+    }
+    const move={schemaVersion:1,kind:'photo-date-move',photoId,source:edited,target,coverChanges};
+    try{writeJSON(photoMovePath,move);completePhotoMove(move,true);}
+    catch(error){if(existsSync(photoMovePath))pendingPhotoMove=move;throw error;}
+    return target;
+  }
   function commitEdit(r,staged,photo=null,stagedPhoto=null) {
     writeJSON(recordPath(r.id),staged);
     // Publish only after the durable write, preserving identities used by live
@@ -1064,7 +1183,7 @@ export function createTravelEngine({dataDir,getConfig=()=>({}),downloadMedia,ins
   async function editPhoto(id,photoId,patch) {
     return queue(async()=>{
       if(!patch||typeof patch!=='object'||Array.isArray(patch))throw new Error('修改内容格式不正确');
-      const r=getRaw(id),originalPhoto=r.media.find(x=>x.id===photoId);if(!originalPhoto)throw new Error('照片不存在');
+      const r=photoRecord(id,photoId),originalPhoto=r.media.find(x=>x.id===photoId);
       if(!['capturedAt','gps','place','caption','tags'].some(key=>Object.hasOwn(patch,key)))return projected(r);
       const staged=copy(r),p=staged.media.find(x=>x.id===photoId);
       const next={...p.userEdits};
@@ -1086,9 +1205,14 @@ export function createTravelEngine({dataDir,getConfig=()=>({}),downloadMedia,ins
       staged.revisions=[...(r.revisions||[]),{at:stamp(),kind:'photo-edit',photoId,before:p.userEdits||{},after:next}];
       p.userEdits=next;
       if(Object.hasOwn(patch,'place')){p.placeStatus=next.place?'manual':'manual-cleared';delete p.placeError;delete p.placeRetryAt;}
+      if(Object.hasOwn(patch,'capturedAt')&&dateFrom(next.capturedAt)!==viewOf(r).date){
+        const target=movePhotoToDay(r,staged,photoId,dateFrom(next.capturedAt));
+        if(Object.hasOwn(patch,'gps')&&!Object.hasOwn(patch,'place'))schedulePlaces(target.id,true);
+        return {...projected(target),movedFromRecordId:r.id,movedPhotoId:photoId};
+      }
       rebuildEditedSummary(staged);commitEdit(r,staged,originalPhoto,p);
-      if(Object.hasOwn(patch,'gps')&&!Object.hasOwn(patch,'place'))schedulePlaces(id,true);
-      return projected(r);
+      if(Object.hasOwn(patch,'gps')&&!Object.hasOwn(patch,'place'))schedulePlaces(r.id,true);
+      return {...projected(r),...(r.id!==id?{movedFromRecordId:id,movedPhotoId:photoId}:{})};
     });
   }
   async function fillMissingLocations({photos,place}={}) {
@@ -1282,6 +1406,7 @@ export function createTravelEngine({dataDir,getConfig=()=>({}),downloadMedia,ins
         await foreground;
         try{await enrichment?.close?.();}finally{await Promise.all([background,placeBackground,...placeFlights.values()]);}
         try{assertStorage();}catch(error){lastError=clean(error);if(['TRAVEL_STORAGE_MISSING','TRAVEL_STORAGE_INVALID'].includes(error.code))return;throw error;}
+        if(pendingPhotoMove)completePhotoMove(pendingPhotoMove,true);
         persist();
       })();
       return closing;
